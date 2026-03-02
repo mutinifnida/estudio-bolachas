@@ -6,6 +6,14 @@
   }
 
   document.addEventListener("DOMContentLoaded", () => {
+    function setRealViewportHeight() {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty("--real-vh", `${vh}px`);
+    }
+
+    setRealViewportHeight();
+    window.addEventListener("resize", setRealViewportHeight);
+
     // 🔹 garante que o site sempre comece no modo teaser
     document.body.classList.remove("site-open");
 
