@@ -1,0 +1,1260 @@
+:root {
+  --reveal: 0;
+}
+
+/* ==========================================================================
+   1) Fontes (Gotham Ultra)
+   ========================================================================== */
+@font-face {
+  font-family: "Gotham Ultra";
+  src:
+    url("../assets/fonts/GothamUltra.woff2") format("woff2"),
+    url("../assets/fonts/GothamUltra.woff") format("woff");
+  font-weight: 800; /* “Ultra” normalmente é bem pesado */
+  font-style: normal;
+  font-display: swap; /* evita "texto invisível" enquanto carrega */
+}
+
+/* ==========================================================================
+   Fonte Gotham Ultra Italic
+   ========================================================================== */
+@font-face {
+  font-family: "Gotham Ultra Italic";
+  src:
+    url("../assets/fonts/GothamUltraItalic.woff2") format("woff2"),
+    url("../assets/fonts/GothamUltraItalic.woff") format("woff");
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ==========================================================================
+   2) Reset mínimo + base
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  background: #ff3333; /* fundo base */
+  overflow: hidden;
+  overflow-x: hidden;
+  color: #2a2a2a;
+
+  /* Mantemos um fallback, mas o menu usará Gotham Ultra */
+  font-family:
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Arial,
+    sans-serif;
+}
+
+/* ==========================================================================
+   FUNDO VIVO (bem sutil) — blobs/gradientes que reagem à rotação
+   - Não altera a estrutura do HTML (usa pseudo-elemento)
+   - Movimenta com CSS vars atualizadas pelo JS: --bgx / --bgy
+   ========================================================================== */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: -20%;
+  pointer-events: none;
+  z-index: 0; /* abaixo do menu, acima do fundo sólido */
+
+  /* Camadas de cor (bem sutis) */
+  background:
+    radial-gradient(
+      closest-side at calc(50% + var(--bgx, 0px)) calc(50% + var(--bgy, 0px)),
+      rgba(245, 152, 53, 0.22),
+      transparent 60%
+    ),
+    radial-gradient(
+      closest-side at calc(55% - var(--bgx, 0px)) calc(45% - var(--bgy, 0px)),
+      rgba(229, 225, 195, 0.14),
+      transparent 62%
+    ),
+    radial-gradient(closest-side at 40% 65%, rgba(42, 42, 42, 0.08), transparent 60%);
+
+  mix-blend-mode: soft-light;
+  filter: blur(18px);
+  opacity: 0.75;
+  transform: translate3d(0, 0, 0);
+
+  /* movimento leve contínuo, independente do JS (só pra manter “vivo”) */
+  animation: bg-drift 10s ease-in-out infinite;
+}
+
+@keyframes bg-drift {
+  0% {
+    transform: translate3d(-0.6%, -0.3%, 0) scale(1.01);
+  }
+  50% {
+    transform: translate3d(0.7%, 0.4%, 0) scale(1.02);
+  }
+  100% {
+    transform: translate3d(-0.6%, -0.3%, 0) scale(1.01);
+  }
+}
+
+/* =========================================================
+   DESLIGAR TEMPORARIAMENTE O FUNDO VIVO (blobs)
+   Motivo: deixar a roseta aparecer “pura” para ajustarmos posição/tamanho.
+   Depois, se quiser, a gente mistura os dois.
+   ========================================================= */
+body::before {
+  opacity: 0 !important;
+}
+
+/* Acessibilidade */
+@media (prefers-reduced-motion: reduce) {
+  body::before {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   3) Ruído / Grain animado (leve, analógico, “estática digital”)
+   - Usa 2 camadas de noise com blend suave
+   - Movimento sutil em steps (sensação de “frame noise”)
+   - Opacidade baixa para não agredir
+   ========================================================================== */
+
+.grain {
+  position: fixed;
+  inset: -30%;
+  pointer-events: none;
+
+  /* bem leve */
+  opacity: 0.08;
+
+  /* overlay suave sobre o vermelho */
+  mix-blend-mode: overlay;
+
+  /* dá cara de impresso/analógico sem sujar demais */
+  filter: contrast(92%) brightness(112%);
+
+  /* duas camadas de “ruído gráfico” (linhas finas + micro padrões) */
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.22) 0px,
+      rgba(255, 255, 255, 0.22) 1px,
+      transparent 2px,
+      transparent 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.16) 0px,
+      rgba(0, 0, 0, 0.16) 1px,
+      transparent 2px,
+      transparent 6px
+    ),
+    radial-gradient(circle at 30% 20%, rgba(0, 0, 0, 0.1) 0%, transparent 42%),
+    radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 44%);
+
+  transform: translate3d(0, 0, 0);
+  animation: grain-drift 7.5s steps(10) infinite;
+  z-index: 6; /* acima de tudo (inclusive menu), como “camada de filme” */
+}
+
+@keyframes grain-drift {
+  0% {
+    transform: translate3d(-1.5%, -1%, 0);
+  }
+  20% {
+    transform: translate3d(1%, -1.8%, 0);
+  }
+  40% {
+    transform: translate3d(1.8%, 0.8%, 0);
+  }
+  60% {
+    transform: translate3d(-1.6%, 1.6%, 0);
+  }
+  80% {
+    transform: translate3d(0.8%, -0.6%, 0);
+  }
+  100% {
+    transform: translate3d(-1.5%, -1%, 0);
+  }
+}
+
+/* Acessibilidade */
+@media (prefers-reduced-motion: reduce) {
+  .grain {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   4) Menu radial (estrutura atual mantida)
+   ========================================================================== */
+.radial {
+  z-index: 2;
+  position: fixed;
+  inset: 0; /* ocupa a viewport toda */
+  overflow: visible; /* garante que nada seja clipado */
+
+  /* =========================================================
+     VARIÁVEIS DO "SISTEMA" DO MENU
+     (colocamos aqui para que lista e dots compartilhem)
+     ========================================================= */
+
+  /* Margem de segurança (para não cortar letras / elementos) */
+  --safe: clamp(16px, 2.5vw, 32px);
+
+  /* Raio padrão (desktop) — será sobrescrito por breakpoints */
+  --radius: 275px;
+
+  /* Centro do círculo (X e Y)
+     - X: um pouco pra dentro para não cortar texto
+     - Y: desktop levemente acima do centro (como você já estava usando) */
+  --cx: calc(var(--radius) * 0.18 + var(--safe));
+  --cy: calc(50vh - 40px);
+
+  /* Altura total do bloco de dots (4 bolinhas):
+     4*10 + 3*10 = 70px (dot=10px, gap=10px) */
+  --dotsH: 70px;
+}
+
+/* Lista radial:
+   /* - Centro do círculo: canto superior esquerdo (com o centro um pouco fora da tela) */
+.radial__list {
+  position: absolute;
+  left: var(--cx);
+  top: var(--cy);
+
+  width: 0;
+  height: 0;
+
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* BREAKPOINTS */
+/* Mobile: círculo menor e centralizado verticalmente */
+@media (max-width: 520px) {
+  .radial {
+    --radius: 140px;
+    --cy: 30vh;
+    width: 520px;
+    height: 520px;
+  }
+}
+
+/* Tablet: intermediário */
+@media (min-width: 521px) and (max-width: 900px) {
+  .radial {
+    --radius: 150px;
+  }
+}
+
+/* Desktop: círculo maior (mantém como você já queria) */
+@media (min-width: 901px) {
+  .radial {
+    --radius: 275px;
+  }
+}
+
+/* ==========================================================================
+   ROSETA AMARELA (SVG único)
+   - Arquivo: assets/svg/roseta-amarela.svg
+   - Centralizada no centro do menu radial (var --cx / --cy)
+   - Tamanho grande para mostrar apenas um recorte (como sua referência)
+   ========================================================================== */
+
+.radial {
+  /* Controle de tamanho da roseta (ajustamos aqui) */
+  --rosetaSize: clamp(900px, 120vmax, 1700px);
+
+  /* Pequenos offsets opcionais (mantém 0 por padrão)
+     Use isso se quiser "colar" mais no contorno do menu depois */
+  --rosetaDx: 0px;
+  --rosetaDy: 0px;
+}
+
+/* =========================================================
+   ROSETA REATIVA (duas camadas)
+   ========================================================= */
+
+/* Camada FINAL (amarela) */
+.radial::before {
+  content: "";
+  position: fixed;
+
+  left: calc(var(--cx) + var(--rosetaDx));
+  top: calc(var(--cy) + var(--rosetaDy));
+
+  width: var(--rosetaSize);
+  height: var(--rosetaSize);
+
+  transform: translate(-50%, -50%) rotate(var(--rosetaAngle, 0deg));
+  transform-origin: 50% 50%;
+
+  pointer-events: none;
+
+  background: url("../assets/svg/roseta-amarela.svg") no-repeat center / contain;
+
+  opacity: var(--reveal);
+  z-index: 1;
+}
+
+/* Camada INICIAL (vermelha) */
+.radial::after {
+  content: "";
+  position: fixed;
+
+  left: calc(var(--cx) + var(--rosetaDx));
+  top: calc(var(--cy) + var(--rosetaDy));
+
+  width: var(--rosetaSize);
+  height: var(--rosetaSize);
+
+  transform: translate(-50%, -50%) rotate(var(--rosetaAngle, 0deg));
+  transform-origin: 50% 50%;
+
+  pointer-events: none;
+
+  background: url("../assets/svg/roseta-vermelha.svg") no-repeat center / contain;
+
+  opacity: calc(1 - var(--reveal));
+  z-index: 2;
+}
+
+/* Mobile: roseta um pouco menor (e com o centro mais "agradável") */
+@media (max-width: 520px) {
+  .radial {
+    --rosetaSize: clamp(700px, 90vmax, 900px);
+    /* se precisar, você pode empurrar levemente para encaixar no recorte */
+    --rosetaDx: 60px;
+    --rosetaDy: -30px;
+  }
+}
+
+/* Tablet */
+@media (min-width: 521px) and (max-width: 900px) {
+  .radial {
+    --rosetaSize: clamp(800px, 100vmax, 1000px);
+    --rosetaDx: 80px;
+    --rosetaDy: 40px;
+  }
+}
+
+/* Desktop */
+@media (min-width: 901px) {
+  .radial {
+    --rosetaSize: clamp(1100px, 120vmax, 1800px);
+    --rosetaDx: 300px;
+    --rosetaDy: 40px;
+  }
+}
+
+/* ==========================================================================
+   5) Itens (texto puro) + primeira estilização
+   - Fonte: Gotham Ultra
+   - Cor base: #f59835
+   - Em foco (.is-active): #e5e1c3
+   - Fonte bem grande (responsiva com clamp)
+   ========================================================================== */
+.radial__item {
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+
+  font-family:
+    "Gotham Ultra Italic",
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Arial,
+    sans-serif;
+
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+
+  font-size: clamp(34px, 6.2vw, 74px);
+  line-height: 1;
+
+  color: #f59835;
+  transition: color 220ms ease;
+}
+
+.radial__item.is-active {
+  color: #e5e1c3;
+}
+
+/* ==========================================================================
+   Dots
+   ========================================================================== */
+
+.radial__dots {
+  position: absolute;
+  left: clamp(10px, 2vw, 18px);
+
+  top: clamp(
+    calc(var(--dotsH) / 2 + var(--safe)),
+    var(--cy),
+    calc(100vh - var(--dotsH) / 2 - var(--safe))
+  );
+  transform: translateY(-50%);
+
+  display: grid;
+  gap: 10px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #f59835;
+  transition:
+    transform 180ms ease,
+    opacity 180ms ease,
+    background-color 180ms ease;
+}
+
+.dot.is-active {
+  background: #e5e1c3;
+}
+
+@media (min-width: 901px) {
+  .radial__dots {
+    top: var(--cy);
+    transform: translateY(-50%);
+  }
+}
+
+/* ==========================================================================
+   MICROFEEDBACK DE SNAP
+   ========================================================================== */
+
+body.is-snapping .radial__item.is-active {
+  animation: snap-pop 220ms ease-out;
+}
+
+body.is-snapping .dot.is-active {
+  animation: snap-pop-dot 220ms ease-out;
+}
+
+@keyframes snap-pop {
+  0% {
+    filter: blur(0px);
+  }
+  45% {
+    filter: blur(0px);
+  }
+  100% {
+    filter: blur(0px);
+  }
+}
+
+@keyframes snap-pop-dot {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.35);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ==========================================================================
+   FAIXA DE ELEMENTOS GRÁFICOS
+   ========================================================================== */
+
+.gfxBand {
+  position: fixed;
+  z-index: 4;
+  pointer-events: none;
+
+  background: #f59835;
+
+  margin: 0;
+  padding: 0;
+}
+
+.gfxBand__barcodeVert,
+.gfxBand__ingredientesDesk,
+.gfxBand__barcodeHori,
+.gfxBand__ingredientesMob {
+  position: absolute;
+  background-color: #2a2a2a;
+
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+}
+
+.gfxBand__barcodeVert,
+.gfxBand__ingredientesDesk,
+.gfxBand__barcodeHori,
+.gfxBand__ingredientesMob {
+  display: none;
+}
+
+@media (min-width: 901px) {
+  .gfxBand {
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 100px;
+  }
+
+  .gfxBand__barcodeVert {
+    display: block;
+    top: 0;
+    right: 0;
+
+    width: calc(100% - 40px);
+    max-width: 150px;
+    height: 58vh;
+
+    margin: 0;
+    padding: 0;
+
+    -webkit-mask-position: top right;
+    mask-position: top right;
+
+    -webkit-mask-image: url("../assets/svg/barcode-vert.svg");
+    mask-image: url("../assets/svg/barcode-vert.svg");
+  }
+
+  .gfxBand__ingredientesDesk {
+    display: block;
+
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: calc(100% - 16px);
+    max-width: none;
+
+    height: 60vh;
+    bottom: 4vh;
+
+    -webkit-mask-image: url("../assets/svg/txt-ingredientes.svg");
+    mask-image: url("../assets/svg/txt-ingredientes.svg");
+  }
+
+  .gfxBand__barcodeHori,
+  .gfxBand__ingredientesMob {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .gfxBand {
+    right: 0;
+    bottom: 0;
+    left: auto;
+    top: auto;
+
+    width: 100vw;
+    height: 60px;
+  }
+
+  .gfxBand__barcodeHori {
+    display: block;
+    right: 0;
+    bottom: 0;
+
+    margin: 0;
+    padding: 0;
+
+    width: 46vw;
+    max-width: 420px;
+    height: 88px;
+
+    -webkit-mask-position: bottom right;
+    mask-position: bottom right;
+
+    -webkit-mask-image: url("../assets/svg/barcode-hori.svg");
+    mask-image: url("../assets/svg/barcode-hori.svg");
+  }
+
+  .gfxBand__ingredientesMob {
+    display: block;
+
+    left: 2vw;
+    top: 50%;
+    transform: translateY(-50%);
+
+    right: calc(46vw + 10px);
+
+    height: 70px;
+    max-height: none;
+
+    -webkit-mask-image: url("../assets/svg/txt-ingredientes-b.svg");
+    mask-image: url("../assets/svg/txt-ingredientes-b.svg");
+  }
+
+  .gfxBand__barcodeVert,
+  .gfxBand__ingredientesDesk {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   LOGO HEADER BOLACHAS
+   ========================================================================== */
+
+.bolachasHeader {
+  position: fixed;
+  pointer-events: auto;
+  z-index: 5;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (min-width: 901px) {
+  .bolachasHeader {
+    right: calc(100px + 200px);
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: clamp(80px, 10vw, 180px);
+    height: 94vh;
+
+    max-height: none;
+
+    background-image: url("../assets/svg/bolachas-header.svg");
+  }
+
+  .bolachasHeader:hover,
+  .bolachasHeader:active {
+    background-image: url("../assets/svg/bolachas-header-b.svg");
+  }
+}
+
+@media (max-width: 900px) {
+  .bolachasHeader {
+    left: 50%;
+    bottom: calc(80px + 10px);
+    transform: translateX(-50%);
+
+    width: 90vw;
+    max-width: 520px;
+    height: 52px;
+
+    background-image: url("../assets/svg/bolachas-header-mob.svg");
+  }
+
+  .bolachasHeader:active {
+    background-image: url("../assets/svg/bolachas-header-mob-b.svg");
+  }
+}
+
+/* ==========================================================================
+   MODO CONTEÚDO
+   ========================================================================== */
+
+.contentTitle {
+  position: fixed;
+  left: 50%;
+  top: clamp(28px, 7vh, 64px);
+  transform: translateX(-50%) translateY(8px);
+  opacity: 0;
+
+  z-index: 10;
+  pointer-events: none;
+
+  font-family:
+    "Gotham Ultra Italic",
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Arial,
+    sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+
+  font-size: clamp(60px, 8vw, 180px);
+  line-height: 1;
+
+  color: #e5e1c3;
+  text-align: center;
+
+  transition:
+    opacity 260ms ease,
+    transform 260ms ease;
+}
+
+body.mode-content .contentTitle {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0px);
+}
+
+.radial__list,
+.radial__dots {
+  transition:
+    transform 360ms cubic-bezier(0.2, 0.9, 0.2, 1),
+    opacity 260ms ease;
+  will-change: transform, opacity;
+}
+
+body.mode-content .radial__list,
+body.mode-content .radial__dots {
+  transform: translateX(-120px);
+  opacity: 0;
+}
+
+.bolachasHeader,
+.gfxBand {
+  transition:
+    translate 360ms cubic-bezier(0.2, 0.9, 0.2, 1),
+    opacity 260ms ease;
+  will-change: translate, opacity;
+
+  translate: 0 0;
+}
+
+body.mode-content .bolachasHeader,
+body.mode-content .gfxBand {
+  translate: 140px 0;
+  opacity: 0;
+}
+
+body.mode-content .radial {
+  pointer-events: none;
+}
+
+.contentBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 7;
+  pointer-events: none;
+
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+
+  transition: opacity 220ms ease;
+}
+
+body.mode-content .contentBackdrop {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+@media (min-width: 901px) {
+  .contentTitle {
+    left: clamp(24px, 4vw, 64px);
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: left;
+  }
+
+  body.mode-content .contentTitle {
+    transform: translateY(-50%);
+  }
+}
+
+@media (max-width: 900px) {
+  .contentTitle {
+    top: 32vh;
+  }
+}
+
+/* ==========================================================================
+   PAINEL DE CONTEÚDO
+   ========================================================================== */
+
+.contentPanel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 50vw;
+
+  background: #2a2a2a;
+  z-index: 9;
+
+  translate: 110% 0;
+  opacity: 1;
+
+  transition: translate 520ms cubic-bezier(0.2, 0.9, 0.2, 1);
+  transition-delay: 120ms;
+  will-change: translate;
+}
+
+body.mode-content .contentPanel {
+  translate: 0 0;
+}
+
+.contentPanel__inner {
+  --panelPad: clamp(18px, 3vw, 34px);
+
+  height: 100%;
+  padding: 0;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: 0;
+}
+
+.contentPanel__body {
+  overflow: auto;
+  padding: var(--panelPad);
+  padding-right: calc(var(--panelPad) + 6px);
+}
+
+.contentPanel__placeholder {
+  margin: 0;
+  opacity: 0.85;
+}
+
+.contentPanel__back {
+  justify-self: start;
+  align-self: end;
+
+  margin-top: 16px;
+
+  background: none;
+  border: none;
+  padding: 0 var(--panelPad) var(--panelPad);
+  margin: 0;
+
+  font-family:
+    "Gotham Ultra",
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Arial,
+    sans-serif;
+  font-size: clamp(14px, 1.4vw, 18px);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+
+  color: #f59835;
+
+  cursor: pointer;
+
+  transition:
+    opacity 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.contentPanel__back:hover {
+  opacity: 1;
+  transform: translateX(-4px);
+  opacity: 1;
+  color: #ff3333;
+  transform: translateX(-4px);
+}
+
+.contentPanel__back:active {
+  opacity: 0.9;
+  transform: translateX(-2px);
+}
+
+@media (min-width: 901px) {
+  .contentPanel__inner {
+    padding-bottom: clamp(24px, 4vh, 64px);
+  }
+
+  .contentPanel__back {
+    font-size: clamp(18px, 1.8vw, 22px);
+  }
+}
+
+.panelSection {
+  display: grid;
+  gap: 14px;
+  padding-bottom: 12px;
+}
+
+.panelLead {
+  margin: 0;
+  font-size: clamp(18px, 1.7vw, 26px);
+  line-height: 1.25;
+  color: #f4f4f4;
+}
+
+.panelBullets {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 8px;
+
+  list-style: square;
+  color: #e5e1c3;
+  font-family:
+    "Gotham Ultra",
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Arial,
+    sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.panelSmall {
+  margin: 0;
+  opacity: 0.75;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.panelSection--manifesto {
+  gap: 16px;
+}
+
+.manifestoP {
+  margin: 0;
+  color: #f4f4f4;
+  opacity: 0.92;
+
+  font-size: clamp(16px, 1.6vw, 18px);
+  line-height: 1.35;
+
+  max-width: 80ch;
+}
+
+@media (min-width: 901px) {
+  .panelSection--manifesto .manifestoP {
+    padding-left: clamp(32px, 4vw, 80px);
+  }
+}
+
+.manifestoP--strong {
+  color: #e5e1c3;
+  opacity: 1;
+  font-family:
+    "Gotham Ultra",
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Arial,
+    sans-serif;
+  letter-spacing: 0.01em;
+  text-transform: none;
+}
+
+@media (max-width: 900px) {
+  .manifestoP {
+    max-width: 66ch;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+}
+
+@media (max-width: 900px) {
+  .contentPanel {
+    width: 100vw;
+    height: 66vh;
+    top: auto;
+    bottom: 0;
+
+    translate: 0 110%;
+
+    transition: translate 520ms cubic-bezier(0.2, 0.9, 0.2, 1);
+    transition-delay: 90ms;
+  }
+
+  body.mode-content .contentPanel {
+    translate: 0 0;
+  }
+}
+
+/* ==========================================================================
+   MODE-CONTENT: Logo “bolachinha”
+   ========================================================================== */
+
+.bolachinhaLogo {
+  position: fixed;
+  pointer-events: auto;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+
+  z-index: 9;
+
+  opacity: 0;
+
+  transition:
+    translate 520ms cubic-bezier(0.2, 0.9, 0.2, 1),
+    opacity 260ms ease;
+
+  will-change: translate, opacity;
+}
+
+@media (min-width: 901px) {
+  .bolachinhaLogo {
+    left: clamp(24px, 4vw, 64px);
+    top: 6vh;
+
+    width: clamp(120px, 9vw, 180px);
+    height: clamp(120px, 9vw, 180px);
+
+    background-image: url("../assets/svg/bolachinha.svg");
+    translate: -140% 0;
+  }
+
+  body.mode-content .bolachinhaLogo {
+    translate: 0 0;
+    opacity: 1;
+    transition-delay: 120ms;
+  }
+
+  .bolachinhaLogo:hover,
+  .bolachinhaLogo:active {
+    background-image: url("../assets/svg/bolachinha-b.svg");
+  }
+}
+
+@media (max-width: 900px) {
+  .bolachinhaLogo {
+    left: 50%;
+    top: 10vh;
+
+    width: clamp(140px, 44vw, 220px);
+    height: clamp(140px, 44vw, 220px);
+
+    background-image: url("../assets/svg/bolachinha.svg");
+    translate: -50% -140%;
+  }
+
+  body.mode-content .bolachinhaLogo {
+    translate: -50% 0;
+    opacity: 1;
+    transition-delay: 120ms;
+  }
+
+  .bolachinhaLogo:active {
+    background-image: url("../assets/svg/bolachinha-b.svg");
+  }
+}
+
+/* ==========================================================================
+   MODE-CONTENT: Selo logo Bolachas
+   ========================================================================== */
+
+.bolachasSelo {
+  position: fixed;
+  pointer-events: none;
+  user-select: none;
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+
+  z-index: 8;
+
+  opacity: 0;
+
+  transition:
+    translate 520ms cubic-bezier(0.2, 0.9, 0.2, 1),
+    opacity 260ms ease;
+
+  will-change: translate, opacity;
+}
+
+@media (min-width: 901px) {
+  .bolachasSelo {
+    left: clamp(24px, 4vw, 64px);
+    bottom: clamp(24px, 4vh, 64px);
+
+    width: clamp(96px, 7vw, 140px);
+    height: clamp(96px, 7vw, 140px);
+
+    background-image: url("../assets/svg/logo-selo.svg");
+    translate: -140% 0;
+  }
+
+  body.mode-content .bolachasSelo {
+    translate: 0 0;
+    opacity: 1;
+    transition-delay: 180ms;
+  }
+}
+
+@media (max-width: 900px) {
+  .bolachasSelo {
+    left: clamp(14px, 4vw, 24px);
+    top: clamp(14px, 4vh, 24px);
+
+    width: clamp(72px, 22vw, 110px);
+    height: clamp(72px, 22vw, 110px);
+
+    background-image: url("../assets/svg/logo-selo.svg");
+    translate: 0 -140%;
+  }
+
+  body.mode-content .bolachasSelo {
+    translate: 0 0;
+    opacity: 1;
+    transition-delay: 160ms;
+  }
+}
+
+/* ==========================================================================
+   “Fita abre pacote” (componente do Manifesto)
+   ========================================================================== */
+
+.zipper {
+  --zipX: 120px;
+
+  position: relative;
+
+  margin-left: calc(-1 * var(--panelPad));
+  margin-right: calc(-1 * var(--panelPad));
+
+  width: auto;
+  height: 80px;
+
+  pointer-events: none;
+}
+
+.zipper__line {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 100%;
+  height: 4px;
+
+  background: #ff3333;
+
+  box-shadow: 0 0 0 2px rgba(255, 51, 51, 0.12);
+}
+
+.zipper__knob {
+  position: absolute;
+  left: var(--zipX);
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 34px;
+  height: 44px;
+
+  border: 0;
+  padding: 0;
+  background-color: #ff3333;
+
+  box-shadow: 0 0 0 2px rgba(255, 51, 51, 0.12);
+
+  -webkit-mask-image: url("../assets/svg/gotinha.svg");
+  mask-image: url("../assets/svg/gotinha.svg");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.22));
+
+  pointer-events: auto;
+  cursor: grab;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: none;
+}
+
+.zipper__knob:active {
+  cursor: grabbing;
+}
+
+/* ==========================================================================
+   Manifesto: selo-lupa
+   ========================================================================== */
+
+.manifestoSelo {
+  position: relative;
+  margin-left: auto;
+
+  width: clamp(64px, 9vw, 110px);
+  aspect-ratio: 1 / 1;
+
+  margin-top: -4vh;
+  margin-bottom: 12px;
+
+  background-image: url("../assets/svg/selo-lupa.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+/* =========================================================
+   Gate de visibilidade: antes de abrir, só a roseta aparece
+   ========================================================= */
+
+/* estado inicial: site fechado */
+body:not(.site-open) .radial__list,
+body:not(.site-open) .radial__dots,
+body:not(.site-open) .gfxBand,
+body:not(.site-open) .bolachasHeader,
+body:not(.site-open) .bolachinhaLogo,
+body:not(.site-open) .bolachasSelo,
+body:not(.site-open) .contentTitle,
+body:not(.site-open) .contentBackdrop,
+body:not(.site-open) .contentPanel,
+body:not(.site-open) .grain {
+  opacity: 0;
+}
+
+/* também bloqueia interação antes de abrir */
+body:not(.site-open) .radial,
+body:not(.site-open) .bolachasHeader {
+  pointer-events: none;
+}
+
+/* garante que o painel não “apareça” nem ocupe nada */
+body:not(.site-open) .contentPanel {
+  translate: 110% 0;
+}
+
+/* transição suave quando liberar */
+body.site-open .radial__list,
+body.site-open .radial__dots,
+body.site-open .gfxBand,
+body.site-open .bolachasHeader,
+body.site-open .bolachinhaLogo,
+body.site-open .bolachasSelo,
+body.site-open .contentTitle {
+  transition: opacity 420ms ease;
+}
+
+/* IMPORTANTE:
+   não mexemos na roseta porque ela é .radial::before
+   (pseudo-elemento), então ela fica visível sempre */
+
+/* Fundo reativo proporcional ao reveal */
+body {
+  background: color-mix(
+    in srgb,
+    #f59835 calc((1 - var(--reveal)) * 100%),
+    #ff3333 calc(var(--reveal) * 100%)
+  );
+}
