@@ -27,6 +27,9 @@
   left: 0;
   width: 100vw;
   height: 50vh;
+
+  box-sizing: border-box; /* ✅ importante */
+
   background: rgba(255, 255, 255, 0.2);
 
   backdrop-filter: blur(16px) contrast(150%);
@@ -40,11 +43,17 @@
 .top-box {
   top: 0;
   border-bottom-left-radius: 120px;
+  height: 50vh; /* fallback */
+  height: 50svh; /* viewport “estável” (bom p/ mobile) */
+  height: 50dvh; /* viewport “dinâmico” (ajusta com barra) */
 }
 
 .bottom-box {
   bottom: 0;
   border-top-left-radius: 120px;
+  height: 50vh; /* fallback */
+  height: 50svh; /* viewport “estável” (bom p/ mobile) */
+  height: 50dvh; /* viewport “dinâmico” (ajusta com barra) */
 }
 
 /* fundos das caixas (imagens) */
@@ -93,7 +102,9 @@
 /* linha + gotinha */
 .linha-vermelha {
   position: fixed;
-  top: 50%;
+  top: 50vh;
+  top: 50svh;
+  top: 50dvh;
   height: 4px;
   transform: translateY(-50%);
   background: #ff3333;
@@ -105,7 +116,9 @@
 
 .gotinha {
   position: fixed;
-  top: 50%;
+  top: 50vh;
+  top: 50svh;
+  top: 50dvh;
   width: 44px;
   height: 54px;
   transform: translate(-50%, -50%);
