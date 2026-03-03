@@ -7,7 +7,7 @@
 }
 
 .entryOverlay.is-hidden {
-  opacity: 0;
+  opacity: 0 !important;
   pointer-events: none;
   transition: opacity 420ms ease;
 }
@@ -38,9 +38,14 @@
 
   overflow: hidden;
   isolation: isolate;
+
+  contain: paint;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .top-box {
+  position: fixed;
   top: 0;
   border-bottom-left-radius: 120px;
   height: calc(var(--real-vh) * 50);
@@ -55,6 +60,7 @@
 /* fundos das caixas (imagens) */
 .bg-top-svg,
 .bg-bottom-svg {
+  z-index: 0;
   position: absolute;
   inset: 0;
   width: 100%;
@@ -63,11 +69,15 @@
   opacity: 1;
   transform: translateZ(0);
   backface-visibility: hidden;
+  will-change: transform;
+
+  border-radius: inherit;
 
   pointer-events: none;
 }
 
 .selo-nova {
+  z-index: 2;
   position: absolute;
   left: 0;
   top: 0;
@@ -77,12 +87,57 @@
 }
 
 .selo-aviso {
+  z-index: 2;
   position: absolute;
   right: 22px;
   top: 18px;
   width: clamp(50px, 12vw, 100px);
   height: auto;
   pointer-events: none;
+}
+
+/* Selo grande no TOP-BOX (fixo, centralizado) */
+.selo-puxe {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(18px, 3.5vh, 34px);
+
+  transform: translateX(-50%) translateZ(0);
+
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+  isolation: isolate;
+
+  z-index: 2;
+
+  width: clamp(300px, 48vw, 700px);
+  height: auto;
+
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+
+  opacity: 1;
+
+  /* ✅ opacidade reativa ao drag (mantém pulsação, só controla a visibilidade) */
+  --fade: calc(1 - var(--pull, 0));
+  opacity: calc(var(--fade) * 1);
+
+  /* pulsação suave */
+  animation: seloPulse 1.6s ease-in-out infinite;
+  transform-origin: 50% 50%;
+}
+
+@keyframes seloPulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.02);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
 }
 
 .rodape-bottom-box {
@@ -125,43 +180,6 @@
   cursor: grabbing;
 }
 
-/* Selo grande no TOP-BOX (fixo, centralizado) */
-.selo-puxe {
-  position: fixed;
-  left: 50%;
-  top: calc(50% - 90px); /* centro do top-box (0..50vh) */
-  transform: translate(-50%, -50%);
-  z-index: 2160;
-
-  width: clamp(300px, 48vw, 700px);
-  height: auto;
-
-  pointer-events: none;
-  user-select: none;
-  -webkit-user-drag: none;
-
-  opacity: 1;
-
-  /* pulsação suave */
-  animation: seloPulse 1.6s ease-in-out infinite;
-  transform-origin: 50% 50%;
-}
-
-@keyframes seloPulse {
-  0% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0.92;
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.02);
-    opacity: 1;
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0.92;
-  }
-}
-
 /* animação de saída (empurrando tudo pra direita) */
 .entryOverlay.is-opening .top-box,
 .entryOverlay.is-opening .bottom-box,
@@ -186,16 +204,6 @@
   transform: translateX(100vw);
 }
 
-/* Na saída, o selo vai embora junto (pra direita), mantendo o centro */
 .entryOverlay.is-opening .selo-puxe {
-  transition:
-    transform 0.5s linear,
-    opacity 0.5s linear;
-  transform: translate(calc(100vw - 50%), -50%) scale(1.02);
-  opacity: 0;
-}
-
-/* opcional: durante o opening, para a pulsação (fica mais “limpo”) */
-.entryOverlay.is-opening .selo-puxe {
-  animation: none;
+  transition: opacity 0.5s linear;
 }

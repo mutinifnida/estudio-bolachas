@@ -1258,3 +1258,34 @@ body {
     #ff3333 calc(var(--reveal) * 100%)
   );
 }
+
+/* =========================================================
+   Blindagem mobile: painel/backdrop só existem em mode-content
+   (evita flash/retângulo preto ao finalizar abertura)
+   ========================================================= */
+
+body:not(.mode-content) .contentBackdrop {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+  transition: none !important;
+}
+
+body:not(.mode-content) .contentPanel {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+  transition: none !important;
+}
+
+/* quando entra em modo conteúdo, volta a funcionar normal */
+body.mode-content .contentBackdrop {
+  visibility: visible !important;
+  transition: opacity 220ms ease !important;
+}
+
+body.mode-content .contentPanel {
+  visibility: visible !important;
+  opacity: 1 !important;
+  /* mantém suas transições atuais (o seu CSS já anima translate) */
+}

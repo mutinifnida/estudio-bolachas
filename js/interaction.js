@@ -17,6 +17,12 @@
     // 🔹 garante que o site sempre comece no modo teaser
     document.body.classList.remove("site-open");
 
+    document.documentElement.style.setProperty("--pull", "0");
+
+    const MOBILE_BP = 900; // mesmo breakpoint do seu CSS
+    const MOBILE_RANGE = 0.78; // 78% da largura (ajuste fino depois)
+    const DESKTOP_PADDING_RIGHT = 20;
+
     document.documentElement.style.setProperty("--reveal", "0");
 
     const overlay = document.getElementById("entryOverlay");
@@ -39,11 +45,16 @@
 
     function measure() {
       const w = window.innerWidth;
-      maxRight = w - 20;
       maxRadius = topBox.getBoundingClientRect().height;
+
+      const isMobile = w <= MOBILE_BP;
+
+      // ✅ no mobile o usuário não precisa ir até o final da tela
+      maxRight = isMobile ? Math.round(w * MOBILE_RANGE) : w - DESKTOP_PADDING_RIGHT;
     }
 
     function setInitial() {
+      document.documentElement.style.setProperty("--pull", "0");
       measure();
 
       topBox.style.borderBottomLeftRadius = `${minRadius}px`;
@@ -66,7 +77,13 @@
       if (hasSlid) return;
       hasSlid = true;
 
+      isDragging = false;
+
+      document.documentElement.style.setProperty("--pull", "1");
+      document.documentElement.style.setProperty("--reveal", "1");
+
       overlay.classList.add("is-opening");
+      overlay.style.transform = "translateZ(0)";
 
       // quando começar a esconder a abertura, liberamos o site
       setTimeout(() => {
@@ -75,8 +92,6 @@
         // ✅ libera os elementos do site (menos a roseta, que já está visível)
         document.body.classList.add("site-open");
       }, 520);
-
-      document.documentElement.style.setProperty("--reveal", "1");
 
       setTimeout(() => {
         overlay.style.display = "none";
@@ -96,6 +111,7 @@
       const clientX = e.touches ? e.touches[0].clientX : e.clientX;
       const clampedX = clamp(clientX, startLeft, maxRight);
       const percent = (clampedX - startLeft) / (maxRight - startLeft);
+      document.documentElement.style.setProperty("--pull", percent.toFixed(4));
       document.documentElement.style.setProperty("--reveal", percent.toFixed(4));
 
       gotinha.style.left = `${clampedX}px`;
@@ -107,7 +123,7 @@
       topBox.style.borderBottomLeftRadius = `${radius}px`;
       bottomBox.style.borderTopLeftRadius = `${radius}px`;
 
-      if (clampedX >= maxRight - 1) openPack();
+      if (clampedX >= maxRight - 6) openPack();
     }
 
     function onEnd() {
