@@ -22,6 +22,10 @@
   const WHEEL_SENS = 0.32;
   const bodyEl = document.body;
 
+  function siteIsOpen() {
+    return document.body.classList.contains("site-open");
+  }
+
   let isContentMode = false;
   const contentTitleEl = document.getElementById("contentTitle");
   const contentPanelBodyEl = document.getElementById("contentPanelBody");
@@ -253,6 +257,7 @@
 
   items.forEach((el, i) => {
     el.addEventListener("click", () => {
+      if (!siteIsOpen()) return; // ✅ guarda aqui dentro
       if (isContentMode) return;
 
       const activeIdx = closestIndexAt(rotation);
@@ -269,6 +274,7 @@
   });
 
   function onDown(x, y) {
+    if (!siteIsOpen()) return;
     isDragging = true;
     lastX = x;
     lastY = y;
@@ -276,6 +282,7 @@
   }
 
   function onMove(x, y) {
+    if (!siteIsOpen()) return;
     if (isContentMode) return;
     if (!isDragging) return;
 
@@ -295,6 +302,7 @@
   }
 
   function onUp() {
+    if (!siteIsOpen()) return;
     if (!isDragging) return;
     isDragging = false;
     scheduleSnap(120);
@@ -330,6 +338,7 @@
   window.addEventListener(
     "wheel",
     (e) => {
+      if (!siteIsOpen()) return;
       if (isContentMode) return;
 
       e.preventDefault();

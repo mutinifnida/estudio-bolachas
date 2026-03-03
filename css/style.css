@@ -1289,3 +1289,9 @@ body.mode-content .contentPanel {
   opacity: 1 !important;
   /* mantém suas transições atuais (o seu CSS já anima translate) */
 }
+
+.radial,
+.radial__list,
+.radial__item {
+  pointer-events: auto;
+}

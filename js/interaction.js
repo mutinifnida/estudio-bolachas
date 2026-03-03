@@ -83,6 +83,7 @@
       document.documentElement.style.setProperty("--reveal", "1");
 
       overlay.classList.add("is-opening");
+      overlay.style.pointerEvents = "none";
       overlay.style.transform = "translateZ(0)";
 
       // quando começar a esconder a abertura, liberamos o site

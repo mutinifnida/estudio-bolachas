@@ -207,3 +207,82 @@
 .entryOverlay.is-opening .selo-puxe {
   transition: opacity 0.5s linear;
 }
+
+/* =========================================================
+   Bolachinha interativa na tela de abertura (bottom-box)
+   ========================================================= */
+
+.bottom-box {
+  position: fixed; /* só garantindo contexto */
+}
+
+.bottom-box .entry-bolachinha {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+
+  transform: translate(-50%, -50%);
+  z-index: 5;
+
+  width: clamp(120px, 34vw, 220px);
+  height: clamp(120px, 34vw, 220px);
+
+  background: url("../assets/svg/bolachinha-entry.svg") no-repeat center / contain;
+
+  pointer-events: auto;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+
+  transition:
+    transform 160ms ease,
+    opacity 160ms ease;
+}
+
+/* desktop hover */
+@media (hover: hover) and (pointer: fine) {
+  .bottom-box .entry-bolachinha:hover {
+    background-image: url("../assets/svg/bolachinha-entry-b.svg");
+    transform: translate(-50%, -50%) scale(1.03);
+  }
+}
+
+/* mobile tap */
+.bottom-box .entry-bolachinha:active {
+  background-image: url("../assets/svg/bolachinha-entry-b.svg");
+  transform: translate(-50%, -50%) scale(0.98);
+}
+
+/* Assim que a abertura começa a sair, ela não pode mais bloquear cliques do site */
+.entryOverlay.is-opening,
+.entryOverlay.is-hidden {
+  pointer-events: none !important;
+}
+
+/* =========================================================
+   Texto Ingredientes (bottom-box)
+   ========================================================= */
+
+.bottom-box .entry-ingredientes {
+  position: absolute;
+  left: 50%;
+  bottom: 2vh;
+
+  transform: translateX(-50%);
+  z-index: 4;
+
+  width: 98vw;
+  height: auto;
+
+  pointer-events: none;
+  user-select: none;
+
+  opacity: 1;
+}
+
+/* MOBILE: troca SVG */
+@media (max-width: 900px) {
+  .bottom-box .entry-ingredientes {
+    content: url("../assets/svg/txt-ingredientes-b.svg");
+    width: 90vw;
+  }
+}
