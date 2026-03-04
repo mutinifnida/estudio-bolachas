@@ -712,7 +712,6 @@ body.is-snapping .dot.is-active {
 .contentTitle {
   position: fixed;
   left: 50%;
-  top: clamp(28px, 7vh, 64px);
   transform: translateX(-50%) translateY(8px);
   opacity: 0;
 
@@ -805,7 +804,7 @@ body.mode-content .contentBackdrop {
 
 @media (max-width: 900px) {
   .contentTitle {
-    top: 23vh;
+    top: clamp(24vh, 160px, 20vh);
   }
 }
 
