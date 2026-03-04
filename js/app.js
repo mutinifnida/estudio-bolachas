@@ -48,9 +48,6 @@
     const fragment = tpl.content.cloneNode(true);
     contentPanelBodyEl.innerHTML = "";
     contentPanelBodyEl.appendChild(fragment);
-
-    const zipper = contentPanelBodyEl.querySelector(".zipper");
-    if (zipper) initZipper(zipper);
   }
 
   const contentBackBtn = document.getElementById("contentBack");

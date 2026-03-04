@@ -28,6 +28,52 @@
   font-display: swap;
 }
 
+/* ==========================================================================  
+   Gotham Book (texto corrido)
+   ========================================================================== */
+@font-face {
+  font-family: "Gotham Book";
+  src:
+    url("../assets/fonts/GothamBook.woff2") format("woff2"),
+    url("../assets/fonts/GothamBook.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ==========================================================================  
+   Gotham Bold (highlight forte)
+   ========================================================================== */
+
+@font-face {
+  font-family: "Gotham Bold";
+  src:
+    url("../assets/fonts/GothamBold.woff2") format("woff2"),
+    url("../assets/fonts/GothamBold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ==========================================================================  
+   Corben (highlights)
+   ========================================================================== */
+@font-face {
+  font-family: "Corben Regular";
+  src: url("../assets/fonts/Corben-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Corben Bold";
+  src: url("../assets/fonts/Corben-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ==========================================================================
    2) Reset mínimo + base
    ========================================================================== */
@@ -303,7 +349,7 @@ body::before {
   background: url("../assets/svg/roseta-amarela.svg") no-repeat center / contain;
 
   opacity: var(--reveal);
-  z-index: 1;
+  z-index: 0;
 }
 
 /* Camada INICIAL (vermelha) */
@@ -333,8 +379,8 @@ body::before {
   .radial {
     --rosetaSize: 90vh;
     /* se precisar, você pode empurrar levemente para encaixar no recorte */
-    --rosetaDx: 60px;
-    --rosetaDy: -30px;
+    --rosetaDx: 20vw;
+    --rosetaDy: -6vh;
   }
 }
 
@@ -342,8 +388,8 @@ body::before {
 @media (min-width: 500px) and (max-width: 900px) {
   .radial {
     --rosetaSize: 90vh;
-    --rosetaDx: 80px;
-    --rosetaDy: 40px;
+    --rosetaDx: 10vw;
+    --rosetaDy: -14vh;
   }
 }
 
@@ -682,13 +728,13 @@ body.is-snapping .dot.is-active {
     Arial,
     sans-serif;
   font-weight: 800;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
 
-  font-size: clamp(60px, 8vw, 180px);
+  font-size: clamp(50px, 8vw, 120px);
   line-height: 1;
 
-  color: #e5e1c3;
+  color: #f59835;
   text-align: center;
 
   transition:
@@ -703,31 +749,23 @@ body.mode-content .contentTitle {
 
 .radial__list,
 .radial__dots {
-  transition:
-    transform 360ms cubic-bezier(0.2, 0.9, 0.2, 1),
-    opacity 260ms ease;
-  will-change: transform, opacity;
+  transition: opacity 260ms ease;
+  will-change: opacity;
 }
 
 body.mode-content .radial__list,
 body.mode-content .radial__dots {
-  transform: translateX(-120px);
   opacity: 0;
 }
 
 .bolachasHeader,
 .gfxBand {
-  transition:
-    translate 360ms cubic-bezier(0.2, 0.9, 0.2, 1),
-    opacity 260ms ease;
-  will-change: translate, opacity;
-
-  translate: 0 0;
+  transition: opacity 260ms ease;
+  will-change: opacity;
 }
 
 body.mode-content .bolachasHeader,
 body.mode-content .gfxBand {
-  translate: 140px 0;
   opacity: 0;
 }
 
@@ -767,7 +805,7 @@ body.mode-content .contentBackdrop {
 
 @media (max-width: 900px) {
   .contentTitle {
-    top: 32vh;
+    top: 24vh;
   }
 }
 
@@ -795,6 +833,25 @@ body.mode-content .contentBackdrop {
 
 body.mode-content .contentPanel {
   translate: 0 0;
+}
+
+/* MOBILE */
+@media (max-width: 900px) {
+  .contentPanel {
+    width: 100vw;
+    height: 73vh;
+    top: auto;
+    bottom: 0;
+
+    translate: 0 110%;
+
+    transition: translate 520ms cubic-bezier(0.2, 0.9, 0.2, 1);
+    transition-delay: 90ms;
+  }
+
+  body.mode-content .contentPanel {
+    translate: 0 0;
+  }
 }
 
 .contentPanel__inner {
@@ -915,66 +972,87 @@ body.mode-content .contentPanel {
   line-height: 1.45;
 }
 
-.panelSection--manifesto {
-  gap: 16px;
-}
+/* =========================================================
+   MANIFESTO — texto principal
+   ========================================================= */
 
 .manifestoP {
   margin: 0;
-  color: #f4f4f4;
-  opacity: 0.92;
 
-  font-size: clamp(16px, 1.6vw, 18px);
-  line-height: 1.35;
-
-  max-width: 80ch;
-}
-
-@media (min-width: 901px) {
-  .panelSection--manifesto .manifestoP {
-    padding-left: clamp(32px, 4vw, 80px);
-  }
-}
-
-.manifestoP--strong {
-  color: #e5e1c3;
-  opacity: 1;
   font-family:
-    "Gotham Ultra",
+    "Gotham Book",
     system-ui,
     -apple-system,
     Segoe UI,
     Roboto,
     Arial,
     sans-serif;
+
+  color: #e5e1c3;
+
+  font-size: clamp(16px, 1.6vw, 20px);
+  line-height: 1.2;
+
+  text-align: center;
+
+  max-width: 56ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* highlight tipo 1 (Corben) */
+
+.manifestoHighlightA {
+  font-family: "Corben Regular", serif;
+  letter-spacing: 0.02em;
+}
+
+/* highlight tipo 2 (cor + bold) */
+
+.manifestoHighlightB {
+  font-family:
+    "Gotham Bold",
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Arial,
+    sans-serif;
+
+  color: #f59835;
   letter-spacing: 0.01em;
-  text-transform: none;
 }
 
+/* espaçamento entre parágrafos */
+
+.panelSection--manifesto {
+  display: grid;
+  gap: 20px;
+}
+
+/* DESKTOP */
+@media (min-width: 901px) {
+  .panelSection--manifesto {
+    padding-top: 12vh; /* aumenta o espaço acima do primeiro parágrafo */
+  }
+}
+
+/* MOBILE */
 @media (max-width: 900px) {
+  /* mais respiro no topo dentro do painel */
+  .panelSection--manifesto {
+    padding-top: 18px;
+    gap: 12px; /* reduz o espaçamento entre parágrafos */
+  }
+
+  /* texto menor e mais compacto (sem perder legibilidade) */
   .manifestoP {
-    max-width: 66ch;
-    font-size: 12px;
-    line-height: 1.4;
-  }
-}
-
-@media (max-width: 900px) {
-  .contentPanel {
-    width: 100vw;
-    height: 66vh;
-    top: auto;
-    bottom: 0;
-
-    translate: 0 110%;
-
-    transition: translate 520ms cubic-bezier(0.2, 0.9, 0.2, 1);
-    transition-delay: 90ms;
+    font-size: 14px; /* direto e previsível no mobile */
+    line-height: 1.42;
+    max-width: 40ch; /* ajuda a caber sem “esticar” linhas */
   }
 
-  body.mode-content .contentPanel {
-    translate: 0 0;
-  }
+  /* highlights não mudam tamanho, só tipografia/cor */
 }
 
 /* ==========================================================================
@@ -995,20 +1073,22 @@ body.mode-content .contentPanel {
 
   opacity: 0;
 
+  scale: 1;
   transition:
     translate 520ms cubic-bezier(0.2, 0.9, 0.2, 1),
-    opacity 260ms ease;
-
-  will-change: translate, opacity;
+    opacity 260ms ease,
+    scale 160ms ease;
+  will-change: translate, opacity, scale;
 }
 
+/* DESKTOP */
 @media (min-width: 901px) {
   .bolachinhaLogo {
     left: clamp(24px, 4vw, 64px);
-    top: 6vh;
+    top: clamp(24px, 4vw, 64px);
 
-    width: clamp(120px, 9vw, 180px);
-    height: clamp(120px, 9vw, 180px);
+    width: 10vw;
+    height: 20vh;
 
     background-image: url("../assets/svg/bolachinha.svg");
     translate: -140% 0;
@@ -1020,19 +1100,27 @@ body.mode-content .contentPanel {
     transition-delay: 120ms;
   }
 
-  .bolachinhaLogo:hover,
+  @media (hover: hover) and (pointer: fine) {
+    .bolachinhaLogo:hover {
+      background-image: url("../assets/svg/bolachinha-b.svg");
+      scale: 1.03;
+    }
+  }
+
   .bolachinhaLogo:active {
     background-image: url("../assets/svg/bolachinha-b.svg");
+    scale: 0.98;
   }
 }
 
+/* MOBILE */
 @media (max-width: 900px) {
   .bolachinhaLogo {
     left: 50%;
-    top: 10vh;
+    top: 2vh;
 
-    width: clamp(140px, 44vw, 220px);
-    height: clamp(140px, 44vw, 220px);
+    width: 40vw;
+    height: 20vh;
 
     background-image: url("../assets/svg/bolachinha.svg");
     translate: -50% -140%;
@@ -1046,157 +1134,22 @@ body.mode-content .contentPanel {
 
   .bolachinhaLogo:active {
     background-image: url("../assets/svg/bolachinha-b.svg");
+    scale: 0.98;
   }
 }
 
 /* ==========================================================================
-   MODE-CONTENT: Selo logo Bolachas
-   ========================================================================== */
-
-.bolachasSelo {
-  position: fixed;
-  pointer-events: none;
-  user-select: none;
-
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-
-  z-index: 8;
-
-  opacity: 0;
-
-  transition:
-    translate 520ms cubic-bezier(0.2, 0.9, 0.2, 1),
-    opacity 260ms ease;
-
-  will-change: translate, opacity;
-}
-
-@media (min-width: 901px) {
-  .bolachasSelo {
-    left: clamp(24px, 4vw, 64px);
-    bottom: clamp(24px, 4vh, 64px);
-
-    width: clamp(96px, 7vw, 140px);
-    height: clamp(96px, 7vw, 140px);
-
-    background-image: url("../assets/svg/logo-selo.svg");
-    translate: -140% 0;
-  }
-
-  body.mode-content .bolachasSelo {
-    translate: 0 0;
-    opacity: 1;
-    transition-delay: 180ms;
-  }
-}
-
-@media (max-width: 900px) {
-  .bolachasSelo {
-    left: clamp(14px, 4vw, 24px);
-    top: clamp(14px, 4vh, 24px);
-
-    width: clamp(72px, 22vw, 110px);
-    height: clamp(72px, 22vw, 110px);
-
-    background-image: url("../assets/svg/logo-selo.svg");
-    translate: 0 -140%;
-  }
-
-  body.mode-content .bolachasSelo {
-    translate: 0 0;
-    opacity: 1;
-    transition-delay: 160ms;
-  }
-}
-
-/* ==========================================================================
-   “Fita abre pacote” (componente do Manifesto)
-   ========================================================================== */
-
-.zipper {
-  --zipX: 120px;
-
-  position: relative;
-
-  margin-left: calc(-1 * var(--panelPad));
-  margin-right: calc(-1 * var(--panelPad));
-
-  width: auto;
-  height: 80px;
-
-  pointer-events: none;
-}
-
-.zipper__line {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-
-  width: 100%;
-  height: 4px;
-
-  background: #ff3333;
-
-  box-shadow: 0 0 0 2px rgba(255, 51, 51, 0.12);
-}
-
-.zipper__knob {
-  position: absolute;
-  left: var(--zipX);
-  top: 50%;
-  transform: translate(-50%, -50%);
-
-  width: 34px;
-  height: 44px;
-
-  border: 0;
-  padding: 0;
-  background-color: #ff3333;
-
-  box-shadow: 0 0 0 2px rgba(255, 51, 51, 0.12);
-
-  -webkit-mask-image: url("../assets/svg/gotinha.svg");
-  mask-image: url("../assets/svg/gotinha.svg");
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  mask-position: center;
-  -webkit-mask-size: contain;
-  mask-size: contain;
-
-  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.22));
-
-  pointer-events: auto;
-  cursor: grab;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: none;
-}
-
-.zipper__knob:active {
-  cursor: grabbing;
-}
-
-/* ==========================================================================
-   Manifesto: selo-lupa
+   Manifesto: manifesto-selo
    ========================================================================== */
 
 .manifestoSelo {
-  position: relative;
-  margin-left: auto;
-
-  width: clamp(64px, 9vw, 110px);
-  aspect-ratio: 1 / 1;
-
-  margin-top: -4vh;
-  margin-bottom: 12px;
-
-  background-image: url("../assets/svg/selo-lupa.svg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
+  display: block;
+  margin: 22px auto 0; /* centraliza e aproxima do conteúdo */
+  width: clamp(160px, 34vw, 200px);
+  height: auto;
+  opacity: 0.95;
+  user-select: none;
+  pointer-events: none;
 }
 
 /* =========================================================
@@ -1209,7 +1162,6 @@ body:not(.site-open) .radial__dots,
 body:not(.site-open) .gfxBand,
 body:not(.site-open) .bolachasHeader,
 body:not(.site-open) .bolachinhaLogo,
-body:not(.site-open) .bolachasSelo,
 body:not(.site-open) .contentTitle,
 body:not(.site-open) .contentBackdrop,
 body:not(.site-open) .contentPanel,
@@ -1234,7 +1186,6 @@ body.site-open .radial__dots,
 body.site-open .gfxBand,
 body.site-open .bolachasHeader,
 body.site-open .bolachinhaLogo,
-body.site-open .bolachasSelo,
 body.site-open .contentTitle {
   transition: opacity 420ms ease;
 }
