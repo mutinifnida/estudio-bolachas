@@ -1144,7 +1144,7 @@ body.mode-content .contentPanel {
 .manifestoSelo {
   display: block;
   margin: 22px auto 0; /* centraliza e aproxima do conteúdo */
-  width: clamp(100px, 34vw, 200px);
+  width: clamp(80px, 30vw, 200px);
   height: auto;
   opacity: 0.95;
   user-select: none;
