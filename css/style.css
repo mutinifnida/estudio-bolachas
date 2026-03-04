@@ -528,7 +528,7 @@ body.is-snapping .dot.is-active {
     top: 50%;
     transform: translateY(-50%);
 
-    width: 60px;
+    width: 4vw;
     height: 60vh;
 
     -webkit-mask-position: center right;
@@ -540,11 +540,11 @@ body.is-snapping .dot.is-active {
 
   /* txt: à esquerda do barcode, centralizado verticalmente */
   .gfxBand__txt {
-    right: 5vw; /* 86px + gap */
+    right: 5vw;
     top: 50%;
     transform: translateY(-50%);
 
-    width: 60px;
+    width: 4vw;
     height: 60vh;
 
     -webkit-mask-position: center;
@@ -568,7 +568,7 @@ body.is-snapping .dot.is-active {
     width: 100vw;
 
     /* altura do rodapé (txt + barcode empilhados) */
-    height: 16vh;
+    height: 13vh;
   }
 
   /* barcode: centralizado e grudado na base */
@@ -578,7 +578,7 @@ body.is-snapping .dot.is-active {
     transform: translateX(-50%);
 
     width: 60vw;
-    height: 60px;
+    height: 6vh;
 
     -webkit-mask-position: bottom center;
     mask-position: bottom center;
@@ -590,11 +590,11 @@ body.is-snapping .dot.is-active {
   /* txt: acima do barcode, centralizado */
   .gfxBand__txt {
     left: 50%;
-    bottom: 14vw; /* ~ altura do barcode + gap */
+    bottom: 6.5vh; /* ~ altura do barcode + gap */
     transform: translateX(-50%);
 
     width: 50vw;
-    height: 44px;
+    height: 5vh;
 
     -webkit-mask-position: bottom center;
     mask-position: bottom center;
@@ -619,9 +619,10 @@ body.is-snapping .dot.is-active {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* DESKTOP */
 @media (min-width: 901px) {
   .bolachasHeader {
-    right: 14vw;
+    right: 18vw;
     top: 50%;
     transform: translateY(-50%);
 
@@ -639,10 +640,11 @@ body.is-snapping .dot.is-active {
   }
 }
 
+/* MOBILE */
 @media (max-width: 900px) {
   .bolachasHeader {
     left: 50%;
-    bottom: 18vh;
+    bottom: 14vh;
     transform: translateX(-50%);
 
     width: 96vw;
