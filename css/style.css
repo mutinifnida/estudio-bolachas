@@ -331,7 +331,7 @@ body::before {
 /* Mobile: roseta um pouco menor (e com o centro mais "agradável") */
 @media (max-width: 520px) {
   .radial {
-    --rosetaSize: clamp(700px, 90vmax, 900px);
+    --rosetaSize: 90vh;
     /* se precisar, você pode empurrar levemente para encaixar no recorte */
     --rosetaDx: 60px;
     --rosetaDy: -30px;
@@ -339,9 +339,9 @@ body::before {
 }
 
 /* Tablet */
-@media (min-width: 521px) and (max-width: 900px) {
+@media (min-width: 500px) and (max-width: 900px) {
   .radial {
-    --rosetaSize: clamp(800px, 100vmax, 1000px);
+    --rosetaSize: 90vh;
     --rosetaDx: 80px;
     --rosetaDy: 40px;
   }
@@ -350,7 +350,7 @@ body::before {
 /* Desktop */
 @media (min-width: 901px) {
   .radial {
-    --rosetaSize: clamp(1100px, 120vmax, 1800px);
+    --rosetaSize: 96vw;
     --rosetaDx: 300px;
     --rosetaDy: 40px;
   }
@@ -479,137 +479,128 @@ body.is-snapping .dot.is-active {
    FAIXA DE ELEMENTOS GRÁFICOS
    ========================================================================== */
 
+/* ==========================================================================
+   FAIXA / RODAPÉ (HOME)
+   - Mobile: barcode centralizado colado na base, txt acima centralizado
+   - Desktop: barcode colado na direita e centralizado verticalmente, txt à esquerda
+   ========================================================================== */
+
 .gfxBand {
   position: fixed;
   z-index: 4;
   pointer-events: none;
-
   background: #f59835;
-
   margin: 0;
   padding: 0;
 }
 
-.gfxBand__barcodeVert,
-.gfxBand__ingredientesDesk,
-.gfxBand__barcodeHori,
-.gfxBand__ingredientesMob {
+/* Elementos internos com MASK para cor #2a2a2a */
+.gfxBand__txt,
+.gfxBand__barcode {
   position: absolute;
   background-color: #2a2a2a;
 
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-position: center;
   -webkit-mask-size: contain;
+
   mask-repeat: no-repeat;
   mask-position: center;
   mask-size: contain;
 }
 
-.gfxBand__barcodeVert,
-.gfxBand__ingredientesDesk,
-.gfxBand__barcodeHori,
-.gfxBand__ingredientesMob {
-  display: none;
-}
-
+/* =========================
+   DESKTOP
+   ========================= */
 @media (min-width: 901px) {
   .gfxBand {
     top: 0;
     right: 0;
     height: 100vh;
-    width: 100px;
+
+    /* largura total do “rodapé” vertical (txt + barcode) */
+    width: 10vw;
   }
 
-  .gfxBand__barcodeVert {
-    display: block;
-    top: 0;
+  /* barcode: colado na direita, centralizado verticalmente */
+  .gfxBand__barcode {
     right: 0;
+    top: 50%;
+    transform: translateY(-50%);
 
-    width: calc(100% - 40px);
-    max-width: 150px;
-    height: 58vh;
+    width: 60px;
+    height: 60vh;
 
-    margin: 0;
-    padding: 0;
-
-    -webkit-mask-position: top right;
-    mask-position: top right;
+    -webkit-mask-position: center right;
+    mask-position: center right;
 
     -webkit-mask-image: url("../assets/svg/barcode-vert.svg");
     mask-image: url("../assets/svg/barcode-vert.svg");
   }
 
-  .gfxBand__ingredientesDesk {
-    display: block;
+  /* txt: à esquerda do barcode, centralizado verticalmente */
+  .gfxBand__txt {
+    right: 5vw; /* 86px + gap */
+    top: 50%;
+    transform: translateY(-50%);
 
-    left: 50%;
-    transform: translateX(-50%);
-
-    width: calc(100% - 16px);
-    max-width: none;
-
+    width: 60px;
     height: 60vh;
-    bottom: 4vh;
 
-    -webkit-mask-image: url("../assets/svg/txt-ingredientes.svg");
-    mask-image: url("../assets/svg/txt-ingredientes.svg");
-  }
+    -webkit-mask-position: center;
+    mask-position: center;
 
-  .gfxBand__barcodeHori,
-  .gfxBand__ingredientesMob {
-    display: none;
+    -webkit-mask-image: url("../assets/svg/txt-rodape.svg");
+    mask-image: url("../assets/svg/txt-rodape.svg");
   }
 }
 
+/* =========================
+   MOBILE
+   ========================= */
 @media (max-width: 900px) {
   .gfxBand {
+    left: 0;
     right: 0;
     bottom: 0;
-    left: auto;
     top: auto;
 
     width: 100vw;
-    height: 60px;
+
+    /* altura do rodapé (txt + barcode empilhados) */
+    height: 16vh;
   }
 
-  .gfxBand__barcodeHori {
-    display: block;
-    right: 0;
+  /* barcode: centralizado e grudado na base */
+  .gfxBand__barcode {
+    left: 50%;
     bottom: 0;
+    transform: translateX(-50%);
 
-    margin: 0;
-    padding: 0;
+    width: 60vw;
+    height: 60px;
 
-    width: 46vw;
-    max-width: 420px;
-    height: 88px;
-
-    -webkit-mask-position: bottom right;
-    mask-position: bottom right;
+    -webkit-mask-position: bottom center;
+    mask-position: bottom center;
 
     -webkit-mask-image: url("../assets/svg/barcode-hori.svg");
     mask-image: url("../assets/svg/barcode-hori.svg");
   }
 
-  .gfxBand__ingredientesMob {
-    display: block;
+  /* txt: acima do barcode, centralizado */
+  .gfxBand__txt {
+    left: 50%;
+    bottom: 14vw; /* ~ altura do barcode + gap */
+    transform: translateX(-50%);
 
-    left: 2vw;
-    top: 50%;
-    transform: translateY(-50%);
+    width: 50vw;
+    height: 44px;
 
-    right: calc(46vw + 10px);
+    -webkit-mask-position: bottom center;
+    mask-position: bottom center;
 
-    height: 70px;
-    max-height: none;
-
-    -webkit-mask-image: url("../assets/svg/txt-ingredientes-b.svg");
-    mask-image: url("../assets/svg/txt-ingredientes-b.svg");
-  }
-
-  .gfxBand__barcodeVert,
-  .gfxBand__ingredientesDesk {
-    display: none;
+    -webkit-mask-image: url("../assets/svg/txt-rodape-mob.svg");
+    mask-image: url("../assets/svg/txt-rodape-mob.svg");
   }
 }
 
@@ -630,12 +621,12 @@ body.is-snapping .dot.is-active {
 
 @media (min-width: 901px) {
   .bolachasHeader {
-    right: calc(100px + 200px);
+    right: 14vw;
     top: 50%;
     transform: translateY(-50%);
 
     width: clamp(80px, 10vw, 180px);
-    height: 94vh;
+    height: 96vh;
 
     max-height: none;
 
@@ -651,10 +642,10 @@ body.is-snapping .dot.is-active {
 @media (max-width: 900px) {
   .bolachasHeader {
     left: 50%;
-    bottom: calc(80px + 10px);
+    bottom: 18vh;
     transform: translateX(-50%);
 
-    width: 90vw;
+    width: 96vw;
     max-width: 520px;
     height: 52px;
 

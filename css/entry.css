@@ -224,8 +224,8 @@
   transform: translate(-50%, -50%);
   z-index: 5;
 
-  width: clamp(120px, 34vw, 220px);
-  height: clamp(120px, 34vw, 220px);
+  width: clamp(180px, 34vw, 200px);
+  height: clamp(180px, 34vw, 200px);
 
   background: url("../assets/svg/bolachinha-entry.svg") no-repeat center / contain;
 
