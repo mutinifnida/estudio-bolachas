@@ -804,7 +804,7 @@ body.mode-content .contentBackdrop {
 
 @media (max-width: 900px) {
   .contentTitle {
-    top: clamp(18vh, 120px, 14vh);
+    top: clamp(140px, 18vh, 160px);
   }
 }
 
@@ -1040,7 +1040,7 @@ body.mode-content .contentPanel {
 @media (max-width: 900px) {
   /* mais respiro no topo dentro do painel */
   .panelSection--manifesto {
-    padding-top: 18px;
+    padding-top: 4vh;
     gap: 12px; /* reduz o espaçamento entre parágrafos */
   }
 
