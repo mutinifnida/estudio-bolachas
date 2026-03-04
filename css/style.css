@@ -804,7 +804,7 @@ body.mode-content .contentBackdrop {
 
 @media (max-width: 900px) {
   .contentTitle {
-    top: clamp(22vh, 120px, 12vh);
+    top: clamp(18vh, 120px, 14vh);
   }
 }
 
