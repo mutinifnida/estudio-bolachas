@@ -1238,3 +1238,951 @@ body.mode-content .contentPanel {
 .radial__item {
   pointer-events: auto;
 }
+
+/* =========================================================
+   LINKS (botões)
+   ========================================================= */
+
+.panelSection--links {
+  display: grid;
+  gap: 18px;
+  padding-top: 18px;
+}
+
+/* botão pill grande (≈ 90vw do painel) */
+.linksBtn {
+  width: min(90vw, 560px);
+  margin: 0 auto;
+
+  display: block;
+  text-decoration: none;
+
+  background: #ff3333;
+  border-radius: 999px;
+  border: none;
+
+  padding: 10px 18px;
+
+  transition:
+    background-color 160ms ease,
+    transform 160ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* título */
+.linksBtn__title {
+  font-family: "Corben Bold", serif;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+
+  color: #f59835;
+  font-size: 36px;
+  line-height: 1.05;
+
+  text-align: center;
+}
+
+/* descrição */
+.linksBtn__desc {
+  font-family:
+    "Gotham Book",
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Arial,
+    sans-serif;
+
+  color: #e5e1c3;
+  font-size: 13px;
+  line-height: 1.2;
+
+  text-align: center;
+}
+
+/* highlight (Gotham Bold) */
+.linksBtn__hl {
+  font-family:
+    "Gotham Bold",
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Arial,
+    sans-serif;
+}
+
+/* hover (desktop) */
+@media (hover: hover) and (pointer: fine) {
+  .linksBtn:hover {
+    background: #f59835;
+    transform: scale(1.01);
+  }
+  .linksBtn:hover .linksBtn__title {
+    color: #ff3333;
+  }
+  .linksBtn:hover .linksBtn__desc {
+    color: #2a2a2a;
+  }
+}
+
+/* tap/click (mobile + desktop) */
+.linksBtn:active {
+  background: #f59835;
+  transform: scale(0.99);
+}
+.linksBtn:active .linksBtn__title {
+  color: #ff3333;
+}
+.linksBtn:active .linksBtn__desc {
+  color: #2a2a2a;
+}
+
+/* acessibilidade */
+.linksBtn:focus-visible {
+  outline: 2px solid #f59835;
+  outline-offset: 3px;
+}
+
+/* MOBILE */
+@media (max-width: 900px) {
+  .panelSection--links {
+    gap: clamp(14px, 3.2vh, 26px);
+    padding-top: clamp(12px, 3vh, 22px);
+    padding-bottom: clamp(12px, 2.5vh, 18px);
+  }
+
+  .linksBtn {
+    width: 90%;
+    max-width: 520px;
+    padding: clamp(12px, 2.3vh, 16px) clamp(16px, 4vw, 22px);
+  }
+
+  .linksBtn__title {
+    font-size: clamp(22px, 7vw, 32px);
+    letter-spacing: 0.02em;
+    margin-bottom: clamp(6px, 1.2vh, 10px);
+  }
+
+  .linksBtn__desc {
+    font-size: clamp(12px, 3.4vw, 14px);
+    line-height: 1.2;
+  }
+}
+
+/* DESKTOP */
+@media (min-width: 901px) {
+  /* centraliza o bloco inteiro (os 3 botões) no painel */
+  .panelSection--links {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    gap: 50px;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .linksBtn {
+    width: min(560px, 92%);
+    padding: 18px 80px;
+  }
+
+  .linksBtn__title {
+    font-size: 42px;
+    letter-spacing: 0.03em;
+    margin-bottom: 12px;
+  }
+
+  .linksBtn__desc {
+    font-size: 14px;
+    line-height: 1.25;
+  }
+}
+
+/* =========================================================
+   SERVIÇOS
+   ========================================================= */
+
+.panelSection--servicos {
+  max-width: 620px;
+  margin: 0 auto;
+  display: grid;
+  gap: clamp(16px, 3vh, 26px);
+  padding-top: clamp(16px, 3vh, 26px);
+}
+
+/* bloco */
+.svcBlock {
+  display: grid;
+  gap: 10px;
+}
+
+.svcBlock + .svcBlock {
+  padding-top: 8px;
+}
+
+.svcHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* bullet */
+.svcBullet {
+  font-family: "Corben Bold", serif;
+  color: #f59835;
+  opacity: 0.9;
+  font-size: clamp(22px, 3.8vw, 32px);
+  line-height: 1;
+}
+
+/* título */
+.svcTitle {
+  font-family: "Corben Bold", serif;
+  color: #f59835;
+  font-size: clamp(24px, 4.2vw, 38px);
+  line-height: 1.05;
+  letter-spacing: 0.015em;
+}
+
+/* descrição */
+.svcDesc {
+  margin-left: calc(clamp(22px, 3.8vw, 32px) + 10px);
+
+  max-width: 58ch;
+
+  font-family:
+    "Gotham Book",
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Arial,
+    sans-serif;
+
+  color: #e5e1c3;
+  opacity: 0.92;
+  font-size: clamp(13px, 2.2vw, 15px);
+  line-height: 1.28;
+}
+
+/* CTA */
+.svcCta {
+  margin: clamp(10px, 2.2vh, 18px) auto 0;
+  width: min(560px, 90%);
+  height: 62px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px; /* distância natural texto → ícone */
+
+  background: #ff3333;
+  border-radius: 999px;
+  text-decoration: none;
+
+  transition:
+    background-color 160ms ease,
+    transform 160ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.svcCta__label {
+  font-family:
+    "Gotham Bold",
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Arial,
+    sans-serif;
+
+  color: #e5e1c3;
+
+  font-size: clamp(18px, 2vw, 22px);
+  letter-spacing: 0.06em;
+
+  line-height: 1;
+}
+
+.svcCta__icon {
+  display: inline-block;
+  flex: 0 0 auto;
+
+  width: 22px;
+  height: 22px;
+
+  background-color: #e5e1c3;
+
+  -webkit-mask-image: url("../assets/svg/icon-whats.svg");
+  mask-image: url("../assets/svg/icon-whats.svg");
+
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  -webkit-mask-position: center;
+  mask-position: center;
+
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+/* Hover: muda FUNDO + TEXTO + ÍCONE */
+@media (hover: hover) and (pointer: fine) {
+  .svcCta:hover {
+    background: #f59835;
+    transform: scale(1.01);
+  }
+  .svcCta:hover .svcCta__label {
+    color: #2a2a2a;
+  }
+  .svcCta:hover .svcCta__icon {
+    background-color: #2a2a2a;
+  }
+}
+
+/* Active (tap/click): garante consistência no mobile */
+.svcCta:active {
+  background: #f59835;
+  transform: scale(0.99);
+}
+.svcCta:active .svcCta__label {
+  color: #2a2a2a;
+}
+.svcCta:active .svcCta__icon {
+  background-color: #2a2a2a;
+}
+
+/* hover desktop */
+@media (hover: hover) and (pointer: fine) {
+  .svcCta:hover .svcCta__icon {
+    background-color: #2a2a2a;
+  }
+}
+.svcCta:active .svcCta__icon {
+  background-color: #2a2a2a;
+}
+
+/* tap/click */
+.svcCta:active {
+  background: #f59835;
+  transform: scale(0.99);
+}
+.svcCta:active .svcCta__label {
+  color: #2a2a2a;
+}
+
+@media (min-width: 901px) {
+  .panelSection--servicos {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding-top: 0;
+    padding-bottom: 0;
+
+    gap: 22px;
+  }
+
+  .svcCta {
+    margin-top: 80px;
+  }
+}
+
+/* MOBILE: mais compacto (evita rolagem) */
+@media (max-width: 900px) {
+  .panelSection--servicos {
+    gap: 14px;
+    padding-top: 4vh;
+  }
+
+  .svcBlock {
+    gap: 8px;
+  }
+  .svcHead {
+    gap: 8px;
+  }
+
+  .svcTitle {
+    font-size: clamp(20px, 5.6vw, 28px);
+  }
+
+  .svcDesc {
+    font-size: 12px;
+    line-height: 1.22;
+    margin-left: calc(clamp(22px, 3.8vw, 32px) + 8px);
+  }
+
+  .svcCta {
+    height: 56px;
+  }
+
+  .svcCta__label {
+    font-size: 15px;
+    letter-spacing: 0.05em;
+  }
+}
+
+/* =========================================================
+   SERVIÇOS — micro animação (stagger)
+   ========================================================= */
+
+@keyframes svcIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* estado base (antes do stagger) */
+body.mode-content .panelSection--servicos .svcBlock,
+body.mode-content .panelSection--servicos .svcCta {
+  opacity: 0;
+}
+
+/* animação aplicada quando SERVIÇOS está ativo */
+body.mode-content[data-active="servicos"] .panelSection--servicos .svcBlock,
+body.mode-content[data-active="servicos"] .panelSection--servicos .svcCta {
+  animation: svcIn 380ms cubic-bezier(0.2, 0.9, 0.2, 1) both;
+}
+
+/* delays: 4 blocos + CTA */
+body.mode-content[data-active="servicos"] .panelSection--servicos .svcBlock:nth-of-type(1) {
+  animation-delay: 60ms;
+}
+body.mode-content[data-active="servicos"] .panelSection--servicos .svcBlock:nth-of-type(2) {
+  animation-delay: 140ms;
+}
+body.mode-content[data-active="servicos"] .panelSection--servicos .svcBlock:nth-of-type(3) {
+  animation-delay: 220ms;
+}
+body.mode-content[data-active="servicos"] .panelSection--servicos .svcBlock:nth-of-type(4) {
+  animation-delay: 300ms;
+}
+body.mode-content[data-active="servicos"] .panelSection--servicos .svcCta {
+  animation-delay: 380ms;
+}
+
+/* =========================================================
+   CONTATO
+   ========================================================= */
+
+.panelSection--contato {
+  display: grid;
+  gap: clamp(12px, 2.4vh, 18px);
+  padding-top: clamp(12px, 2.8vh, 24px);
+}
+
+/* título + intro */
+.ctTitle {
+  margin: 0;
+  font-family: "Corben Bold", serif;
+  color: #f59835;
+  text-align: center;
+  font-size: clamp(22px, 5.4vw, 34px);
+  line-height: 1.1;
+}
+
+.ctIntro {
+  margin: 0;
+  font-family:
+    "Gotham Book",
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Arial,
+    sans-serif;
+  color: #e5e1c3;
+  text-align: center;
+  font-size: clamp(13px, 3.5vw, 12px);
+  line-height: 1.25;
+}
+
+/* box do formulário */
+.ctFormBox {
+  background: #f59835;
+  border-radius: 24px;
+  padding: clamp(14px, 2.6vh, 18px);
+}
+
+/* campos */
+.ctForm {
+  display: grid;
+  gap: 10px;
+}
+
+.ctField {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  background: #f4f4f4;
+  border-radius: 999px;
+
+  padding: 10px 14px;
+}
+
+.ctField--msg {
+  align-items: stretch;
+  border-radius: 20px;
+  padding: 12px 14px;
+}
+
+/* ícones dos campos (mask) */
+.ctIcon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  background-color: #2a2a2a;
+
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  -webkit-mask-position: center;
+  mask-position: center;
+
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.ctIcon--user {
+  -webkit-mask-image: url("../assets/svg/icon-user.svg");
+  mask-image: url("../assets/svg/icon-user.svg");
+}
+.ctIcon--mail {
+  -webkit-mask-image: url("../assets/svg/icon-mail.svg");
+  mask-image: url("../assets/svg/icon-mail.svg");
+}
+.ctIcon--phone {
+  -webkit-mask-image: url("../assets/svg/icon-phone.svg");
+  mask-image: url("../assets/svg/icon-phone.svg");
+}
+
+/* inputs */
+.ctInput {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+
+  font-family:
+    "Gotham Book",
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Arial,
+    sans-serif;
+
+  font-size: 14px;
+  line-height: 1.2;
+  color: #2a2a2a;
+}
+
+.ctInput::placeholder {
+  color: #2a2a2a;
+  opacity: 0.85;
+}
+
+.ctTextarea {
+  resize: none;
+  min-height: 110px;
+}
+
+/* legenda */
+.ctLegend {
+  font-family:
+    "Gotham Book",
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Arial,
+    sans-serif;
+  font-size: 12px;
+  color: #2a2a2a;
+  text-align: left;
+  margin-top: 2px;
+}
+
+/* botão enviar */
+.ctSend {
+  height: 52px;
+  border: none;
+  border-radius: 999px;
+  background: #2a2a2a;
+
+  font-family:
+    "Gotham Bold",
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Arial,
+    sans-serif;
+
+  color: #e5e1c3;
+  letter-spacing: 0.08em;
+
+  transition:
+    background-color 160ms ease,
+    transform 160ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ctSend:hover {
+    background: #ff3333;
+    transform: scale(1.01);
+  }
+}
+
+.ctSend:active {
+  background: #ff3333;
+  transform: scale(0.99);
+}
+
+/* info + email */
+.ctInfo {
+  margin: 0;
+  font-family:
+    "Gotham Book",
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Arial,
+    sans-serif;
+  font-size: 12px;
+  line-height: 1.2;
+  text-align: center;
+  color: #e5e1c3;
+  opacity: 0.95;
+}
+
+.ctEmail {
+  font-family:
+    "Gotham Bold",
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Arial,
+    sans-serif;
+  color: #f59835;
+  text-align: center;
+  font-size: clamp(14px, 3.8vw, 18px);
+  letter-spacing: 0.02em;
+}
+
+/* ícones sociais */
+.ctSocial {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.ctSocialBtn {
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  background: #f59835;
+
+  display: grid;
+  place-items: center;
+
+  text-decoration: none;
+  transition:
+    background-color 160ms ease,
+    transform 160ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ctSocialIcon {
+  width: 22px;
+  height: 22px;
+  background-color: #2a2a2a;
+
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  -webkit-mask-position: center;
+  mask-position: center;
+
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.ctSocialIcon--insta {
+  -webkit-mask-image: url("../assets/svg/icon-insta.svg");
+  mask-image: url("../assets/svg/icon-insta.svg");
+}
+.ctSocialIcon--behance {
+  -webkit-mask-image: url("../assets/svg/icon-behance.svg");
+  mask-image: url("../assets/svg/icon-behance.svg");
+}
+.ctSocialIcon--linkedin {
+  -webkit-mask-image: url("../assets/svg/icon-linkedin.svg");
+  mask-image: url("../assets/svg/icon-linkedin.svg");
+}
+.ctSocialIcon--whats {
+  -webkit-mask-image: url("../assets/svg/icon-whats.svg");
+  mask-image: url("../assets/svg/icon-whats.svg");
+}
+
+/* hover/tap social */
+@media (hover: hover) and (pointer: fine) {
+  .ctSocialBtn:hover {
+    background: #ff3333;
+    transform: scale(1.05);
+  }
+  .ctSocialBtn:hover .ctSocialIcon {
+    background-color: #e5e1c3;
+  }
+}
+
+.ctSocialBtn:active {
+  background: #ff3333;
+  transform: scale(0.98);
+}
+.ctSocialBtn:active .ctSocialIcon {
+  background-color: #e5e1c3;
+}
+
+/* desktop: centraliza o conjunto no painel (opcional mas fica lindo) */
+@media (min-width: 901px) {
+  .panelSection--contato {
+    max-width: 620px;
+    margin: 0 auto;
+  }
+}
+
+/* =========================================================
+   CONTATO — ajustes finais (desktop centralizado / mobile compacto)
+   ========================================================= */
+
+/* DESKTOP: centralizar tudo no meio do painel */
+@media (min-width: 901px) {
+  .panelSection--contato {
+    min-height: 100%;
+    max-width: 620px;
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    gap: 14px;
+    padding-top: 0;
+  }
+}
+
+/* MOBILE: título 1 linha + descrição menor + compacto (sem rolagem) */
+@media (max-width: 900px) {
+  .panelSection--contato {
+    gap: 10px;
+    padding-top: 10px;
+  }
+
+  .ctTitle {
+    white-space: nowrap;
+    font-size: clamp(18px, 5.2vw, 22px);
+  }
+
+  .ctIntro {
+    font-size: 11px;
+    line-height: 1.18;
+  }
+
+  .ctFormBox {
+    padding: 12px;
+    border-radius: 20px;
+  }
+
+  .ctForm {
+    gap: 8px;
+  }
+
+  .ctField {
+    padding: 8px 12px;
+  }
+
+  .ctField--msg {
+    padding: 10px 12px;
+  }
+
+  .ctTextarea {
+    min-height: 92px;
+  }
+
+  .ctLegend {
+    font-size: 11px;
+  }
+
+  .ctSend {
+    height: 48px;
+  }
+
+  .ctInfo {
+    font-size: 9px;
+    line-height: 1.15;
+  }
+
+  .ctSocialBtn {
+    width: 42px;
+    height: 42px;
+  }
+
+  .ctSocialIcon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* link do e-mail com aparência de texto */
+.ctEmail {
+  text-decoration: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .ctEmail:hover {
+    text-decoration: underline;
+  }
+}
+
+/* =========================================================
+   MICRO-ANIMAÇÃO (stagger) — todas as seções
+   Requer: body.mode-content + body.dataset.active = key
+   ========================================================= */
+
+@keyframes panelStaggerIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* MANIFESTO */
+body.mode-content[data-active="manifesto"] .panelSection--manifesto .manifestoP,
+body.mode-content[data-active="manifesto"] .panelSection--manifesto .manifestoSelo {
+  opacity: 0;
+  animation: panelStaggerIn 420ms cubic-bezier(0.2, 0.9, 0.2, 1) both;
+}
+
+body.mode-content[data-active="manifesto"] .panelSection--manifesto .manifestoP:nth-of-type(1) {
+  animation-delay: 70ms;
+}
+body.mode-content[data-active="manifesto"] .panelSection--manifesto .manifestoP:nth-of-type(2) {
+  animation-delay: 150ms;
+}
+body.mode-content[data-active="manifesto"] .panelSection--manifesto .manifestoP:nth-of-type(3) {
+  animation-delay: 230ms;
+}
+body.mode-content[data-active="manifesto"] .panelSection--manifesto .manifestoP:nth-of-type(4) {
+  animation-delay: 310ms;
+}
+body.mode-content[data-active="manifesto"] .panelSection--manifesto .manifestoP:nth-of-type(5) {
+  animation-delay: 390ms;
+}
+body.mode-content[data-active="manifesto"] .panelSection--manifesto .manifestoSelo {
+  animation-delay: 470ms;
+}
+
+/* LINKS */
+body.mode-content[data-active="links"] .panelSection--links .linksBtn {
+  opacity: 0;
+  animation: panelStaggerIn 420ms cubic-bezier(0.2, 0.9, 0.2, 1) both;
+}
+body.mode-content[data-active="links"] .panelSection--links .linksBtn:nth-of-type(1) {
+  animation-delay: 90ms;
+}
+body.mode-content[data-active="links"] .panelSection--links .linksBtn:nth-of-type(2) {
+  animation-delay: 190ms;
+}
+body.mode-content[data-active="links"] .panelSection--links .linksBtn:nth-of-type(3) {
+  animation-delay: 290ms;
+}
+
+/* SERVIÇOS */
+body.mode-content[data-active="servicos"] .panelSection--servicos .svcBlock,
+body.mode-content[data-active="servicos"] .panelSection--servicos .svcCta {
+  opacity: 0;
+  animation: panelStaggerIn 420ms cubic-bezier(0.2, 0.9, 0.2, 1) both;
+}
+body.mode-content[data-active="servicos"] .panelSection--servicos .svcBlock:nth-of-type(1) {
+  animation-delay: 70ms;
+}
+body.mode-content[data-active="servicos"] .panelSection--servicos .svcBlock:nth-of-type(2) {
+  animation-delay: 150ms;
+}
+body.mode-content[data-active="servicos"] .panelSection--servicos .svcBlock:nth-of-type(3) {
+  animation-delay: 230ms;
+}
+body.mode-content[data-active="servicos"] .panelSection--servicos .svcBlock:nth-of-type(4) {
+  animation-delay: 310ms;
+}
+body.mode-content[data-active="servicos"] .panelSection--servicos .svcCta {
+  animation-delay: 390ms;
+}
+
+/* CONTATO */
+body.mode-content[data-active="contato"] .panelSection--contato .ctTitle,
+body.mode-content[data-active="contato"] .panelSection--contato .ctIntro,
+body.mode-content[data-active="contato"] .panelSection--contato .ctFormBox,
+body.mode-content[data-active="contato"] .panelSection--contato .ctInfo,
+body.mode-content[data-active="contato"] .panelSection--contato .ctEmail,
+body.mode-content[data-active="contato"] .panelSection--contato .ctSocial {
+  opacity: 0;
+  animation: panelStaggerIn 420ms cubic-bezier(0.2, 0.9, 0.2, 1) both;
+}
+
+body.mode-content[data-active="contato"] .panelSection--contato .ctTitle {
+  animation-delay: 60ms;
+}
+body.mode-content[data-active="contato"] .panelSection--contato .ctIntro {
+  animation-delay: 140ms;
+}
+body.mode-content[data-active="contato"] .panelSection--contato .ctFormBox {
+  animation-delay: 220ms;
+}
+body.mode-content[data-active="contato"] .panelSection--contato .ctInfo {
+  animation-delay: 300ms;
+}
+body.mode-content[data-active="contato"] .panelSection--contato .ctEmail {
+  animation-delay: 380ms;
+}
+body.mode-content[data-active="contato"] .panelSection--contato .ctSocial {
+  animation-delay: 460ms;
+}
+
+/* Respeita preferências de acessibilidade */
+@media (prefers-reduced-motion: reduce) {
+  body.mode-content[data-active="manifesto"] .panelSection--manifesto .manifestoP,
+  body.mode-content[data-active="manifesto"] .panelSection--manifesto .manifestoSelo,
+  body.mode-content[data-active="links"] .panelSection--links .linksBtn,
+  body.mode-content[data-active="servicos"] .panelSection--servicos .svcBlock,
+  body.mode-content[data-active="servicos"] .panelSection--servicos .svcCta,
+  body.mode-content[data-active="contato"] .panelSection--contato .ctTitle,
+  body.mode-content[data-active="contato"] .panelSection--contato .ctIntro,
+  body.mode-content[data-active="contato"] .panelSection--contato .ctFormBox,
+  body.mode-content[data-active="contato"] .panelSection--contato .ctInfo,
+  body.mode-content[data-active="contato"] .panelSection--contato .ctEmail,
+  body.mode-content[data-active="contato"] .panelSection--contato .ctSocial {
+    opacity: 1;
+    animation: none;
+    transform: none;
+  }
+}

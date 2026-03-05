@@ -82,6 +82,8 @@
     const title = titleText || "";
     currentSectionKey = key || null;
 
+    bodyEl.dataset.active = currentSectionKey || "";
+
     if (contentTitleEl) contentTitleEl.textContent = title;
 
     if (currentSectionKey) renderSection(currentSectionKey);
@@ -90,6 +92,8 @@
   function closeContentMode() {
     isContentMode = false;
     bodyEl.classList.remove("mode-content");
+    delete bodyEl.dataset.active;
+
     currentSectionKey = null;
 
     if (contentTitleEl) contentTitleEl.textContent = "";

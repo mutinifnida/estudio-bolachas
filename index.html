@@ -98,6 +98,7 @@
       </div>
     </aside>
 
+    <!-- SEÇÃO MANIFESTO -->
     <template id="tpl-manifesto">
       <section class="panelSection panelSection--manifesto">
         <p class="manifestoP">
@@ -134,37 +135,174 @@
         <img src="assets/svg/manifesto-selo.svg" class="manifestoSelo" alt="Selo Manifesto" />
       </section>
     </template>
+    <!-- FIM DE MANIFESTO -->
 
+    <!-- SEÇÃO CONTATO -->
     <template id="tpl-contato">
-      <section class="panelSection panelSection--lojinha">
-        <p class="panelLead">A lojinha tá em construção.</p>
-        <p class="panelSmall">Em breve: prints, adesivos, bugigangas e edições limitadas.</p>
+      <section class="panelSection panelSection--contato">
+        <h3 class="ctTitle">Conte a sua ideia pra gente!</h3>
+
+        <p class="ctIntro">
+          Use o formulário abaixo ou dê um “alô" nas nossas redes sociais.<br />
+          Estaremos prontos para te atender da melhor forma possível.
+        </p>
+
+        <div class="ctFormBox">
+          <form class="ctForm" action="#" method="post">
+            <label class="ctField">
+              <span class="ctIcon ctIcon--user" aria-hidden="true"></span>
+              <input class="ctInput" type="text" name="nome" placeholder="Nome*" required />
+            </label>
+
+            <label class="ctField">
+              <span class="ctIcon ctIcon--mail" aria-hidden="true"></span>
+              <input class="ctInput" type="email" name="email" placeholder="Email*" required />
+            </label>
+
+            <label class="ctField">
+              <span class="ctIcon ctIcon--phone" aria-hidden="true"></span>
+              <input class="ctInput" type="tel" name="telefone" placeholder="Telefone (opcional)" />
+            </label>
+
+            <label class="ctField ctField--msg">
+              <textarea
+                class="ctInput ctTextarea"
+                name="mensagem"
+                placeholder="Conte um pouco sobre seu negócio, ideia ou necessidades atuais."
+                rows="5"
+              ></textarea>
+            </label>
+
+            <div class="ctLegend">* Campos obrigatórios</div>
+
+            <button class="ctSend" type="submit">ENVIAR</button>
+          </form>
+        </div>
+
+        <p class="ctInfo">
+          Todas as informações compartilhadas são tratadas com discrição e respeito.
+        </p>
+
+        <a class="ctEmail" href="mailto:contato@estudiobolachas.com">contato@estudiobolachas.com</a>
+
+        <div class="ctSocial" aria-label="Redes sociais">
+          <a
+            class="ctSocialBtn"
+            href="https://www.instagram.com/estudiobolachas/"
+            aria-label="Instagram"
+          >
+            <span class="ctSocialIcon ctSocialIcon--insta" aria-hidden="true"></span>
+          </a>
+          <a
+            class="ctSocialBtn"
+            href="https://www.behance.net/estudiobolachas"
+            aria-label="Behance"
+          >
+            <span class="ctSocialIcon ctSocialIcon--behance" aria-hidden="true"></span>
+          </a>
+          <a
+            class="ctSocialBtn"
+            href="https://www.linkedin.com/company/estudiobolachas/"
+            aria-label="LinkedIn"
+          >
+            <span class="ctSocialIcon ctSocialIcon--linkedin" aria-hidden="true"></span>
+          </a>
+          <a
+            class="ctSocialBtn"
+            href="https://api.whatsapp.com/message/KOBMPQ3VIMDCH1"
+            aria-label="WhatsApp"
+          >
+            <span class="ctSocialIcon ctSocialIcon--whats" aria-hidden="true"></span>
+          </a>
+        </div>
       </section>
     </template>
+    <!-- FIM DE CONTATO -->
 
+    <!-- SEÇÃO SERVIÇOS -->
     <template id="tpl-servicos">
       <section class="panelSection panelSection--servicos">
-        <p class="panelLead">Serviços (rascunho)</p>
-        <ul class="panelBullets">
-          <li>identidade visual</li>
-          <li>direção de arte</li>
-          <li>design gráfico</li>
-          <li>conteúdo / social</li>
-          <li>sites e landing pages</li>
-        </ul>
+        <div class="svcBlock">
+          <div class="svcHead">
+            <div class="svcBullet">*</div>
+            <div class="svcTitle">Web Design</div>
+          </div>
+          <div class="svcDesc">
+            Sites preparados com criatividade refinada e prontos pra converter. Tudo responsivo e
+            caramelizado com design que chama atenção.
+          </div>
+        </div>
+
+        <div class="svcBlock">
+          <div class="svcHead">
+            <div class="svcBullet">*</div>
+            <div class="svcTitle">Planejamento</div>
+          </div>
+          <div class="svcDesc">
+            Anúncios com alto teor de resultado. Seu trampo foca no que importa, enquanto o sistema
+            prepara os leads automaticamente.
+          </div>
+        </div>
+
+        <div class="svcBlock">
+          <div class="svcHead">
+            <div class="svcBullet">*</div>
+            <div class="svcTitle">Identidade Visual</div>
+          </div>
+          <div class="svcDesc">
+            Identidade com recheio. Da criação ou fortalecimento da marca às redes sociais, a gente
+            entrega o pacote completo pra sua marca virar referência.
+          </div>
+        </div>
+
+        <div class="svcBlock">
+          <div class="svcHead">
+            <div class="svcBullet">*</div>
+            <div class="svcTitle">Produtos &amp; Campanhas</div>
+          </div>
+          <div class="svcDesc">
+            Do rascunho à prateleira, preparamos produtos e campanhas com sabor estratégico. Tudo
+            pronto pra impactar, engajar e fazer sua marca faturar.
+          </div>
+        </div>
+
+        <a class="svcCta" href="https://api.whatsapp.com/message/KOBMPQ3VIMDCH1" rel="noopener">
+          <span class="svcCta__label">FALE COM A GENTE</span>
+          <span class="svcCta__icon" aria-hidden="true"></span>
+        </a>
       </section>
     </template>
+    <!-- FIM DE SERVIÇOS -->
 
+    <!-- SEÇÃO LINKS -->
     <template id="tpl-links">
       <section class="panelSection panelSection--links">
-        <p class="panelLead">Links rápidos</p>
-        <ul class="panelBullets">
-          <li>Instagram (em breve)</li>
-          <li>WhatsApp (em breve)</li>
-          <li>Loja (em breve)</li>
-        </ul>
+        <a class="linksBtn" href="https://www.instagram.com/estudiobolachas/" rel="noopener">
+          <div class="linksBtn__title">NOVIDADES</div>
+          <div class="linksBtn__desc">
+            Acompanhe nossos projetos recentes no Instagram.
+            <span class="linksBtn__hl">@estudiobolachas</span>;
+          </div>
+        </a>
+
+        <a class="linksBtn" href="https://www.behance.net/estudiobolachas" rel="noopener">
+          <div class="linksBtn__title">PROJETOS</div>
+          <div class="linksBtn__desc">
+            Veja nossos processos criativos no Behance.
+            <span class="linksBtn__hl">@estudiobolachas</span>;
+          </div>
+        </a>
+
+        <a class="linksBtn" href="https://www.instagram.com/galeriabolachas/" rel="noopener">
+          <div class="linksBtn__title">GALERIA</div>
+          <div class="linksBtn__desc">
+            Conheça produtos originais com a nossa curadoria
+            <span class="linksBtn__hl">@galeriabolachas</span>;
+          </div>
+        </a>
       </section>
     </template>
+    <!-- FIM DE LINKS -->
 
     <!-- =========================
          ABERTURA (OVERLAY)
