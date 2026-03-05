@@ -803,8 +803,29 @@ body.mode-content .contentBackdrop {
 }
 
 @media (max-width: 900px) {
+  :root {
+    /* mantém em 1 lugar só (e a conta do topo vem daqui) */
+    --contentPanelH: 73vh;
+
+    /* topo do painel = altura da tela - altura do painel */
+    --panelTop: calc(100vh - var(--contentPanelH));
+
+    /* “zona segura” abaixo da bolachinha (topo + altura + respiro) */
+    --bolachinhaSafeTop: calc(2vh + clamp(100px, 30vw, 120px) + 12px);
+  }
+
   .contentTitle {
-    top: clamp(140px, 18vh, 160px);
+    /* trava o título alinhado ao topo do painel,
+       mas respeita a bolachinha (não deixa invadir) */
+    top: max(var(--panelTop), var(--bolachinhaSafeTop));
+
+    /* título “encaixado” na borda superior do painel (fora do painel) */
+    transform: translateX(-50%) translateY(calc(-100% + 10px));
+  }
+
+  body.mode-content .contentTitle {
+    /* quando abre o conteúdo, ele fica fixo e “limpo” (sem o +10px) */
+    transform: translateX(-50%) translateY(-100%);
   }
 }
 
@@ -838,7 +859,7 @@ body.mode-content .contentPanel {
 @media (max-width: 900px) {
   .contentPanel {
     width: 100vw;
-    height: 73vh;
+    height: var(--contentPanelH, 73vh);
     top: auto;
     bottom: 0;
 

@@ -421,3 +421,24 @@
     window.addEventListener("touchend", onUp, { passive: false });
   }
 })();
+
+/* =========================================================
+   Abrir todos os links externos em nova aba
+   ========================================================= */
+
+document.querySelectorAll("a[href]").forEach((link) => {
+  const url = link.getAttribute("href");
+
+  if (!url) return;
+
+  const isExternal =
+    url.startsWith("http") ||
+    url.startsWith("https") ||
+    url.startsWith("mailto:") ||
+    url.startsWith("tel:");
+
+  if (isExternal) {
+    link.setAttribute("target", "_blank");
+    link.setAttribute("rel", "noopener noreferrer");
+  }
+});
