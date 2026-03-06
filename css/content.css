@@ -1,0 +1,1310 @@
+/* ==========================================================================
+   1) MODO CONTEÚDO
+   ========================================================================== */
+
+.contentTitle {
+  position: fixed;
+  left: 50%;
+  z-index: 10;
+
+  opacity: 0;
+  pointer-events: none;
+
+  transform: translateX(-50%) translateY(8px);
+  transition:
+    opacity 260ms ease,
+    transform 260ms ease;
+
+  font-family:
+    "Gotham Ultra Italic",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+  font-weight: 800;
+  font-size: clamp(50px, 8vw, 120px);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-align: center;
+
+  color: #f59835;
+}
+
+body.mode-content .contentTitle {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.radial__list,
+.radial__dots {
+  transition: opacity 260ms ease;
+  will-change: opacity;
+}
+
+body.mode-content .radial__list,
+body.mode-content .radial__dots {
+  opacity: 0;
+}
+
+.bolachasHeader,
+.gfxBand {
+  transition: opacity 260ms ease;
+  will-change: opacity;
+}
+
+body.mode-content .bolachasHeader,
+body.mode-content .gfxBand {
+  opacity: 0;
+}
+
+body.mode-content .radial {
+  pointer-events: none;
+}
+
+.contentBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 7;
+
+  opacity: 0;
+  pointer-events: none;
+
+  background: rgba(0, 0, 0, 0.5);
+  transition: opacity 220ms ease;
+}
+
+body.mode-content .contentBackdrop {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (min-width: 901px) {
+  .contentTitle {
+    left: clamp(24px, 4vw, 64px);
+    top: 50%;
+
+    text-align: left;
+    transform: translateY(-50%);
+  }
+
+  body.mode-content .contentTitle {
+    transform: translateY(-50%);
+  }
+}
+
+@media (max-width: 900px) {
+  :root {
+    --contentPanelH: 73vh;
+    --panelTop: calc(100vh - var(--contentPanelH));
+    --bolachinhaSafeTop: calc(2vh + clamp(100px, 30vw, 120px) + 12px);
+  }
+
+  .contentTitle {
+    top: max(var(--panelTop), var(--bolachinhaSafeTop));
+    transform: translateX(-50%) translateY(calc(-100% + 10px));
+  }
+
+  body.mode-content .contentTitle {
+    transform: translateX(-50%) translateY(-100%);
+  }
+}
+
+/* ==========================================================================
+   2) PAINEL DE CONTEÚDO
+   ========================================================================== */
+
+.contentPanel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 9;
+
+  width: 50vw;
+  height: 100vh;
+
+  opacity: 1;
+  background: #2a2a2a;
+
+  translate: 110% 0;
+  will-change: translate;
+
+  transition: translate 520ms cubic-bezier(0.2, 0.9, 0.2, 1);
+  transition-delay: 120ms;
+}
+
+body.mode-content .contentPanel {
+  translate: 0 0;
+}
+
+@media (max-width: 900px) {
+  .contentPanel {
+    top: auto;
+    bottom: 0;
+
+    width: 100vw;
+    height: var(--contentPanelH, 73vh);
+
+    translate: 0 110%;
+    transition-delay: 90ms;
+  }
+
+  body.mode-content .contentPanel {
+    translate: 0 0;
+  }
+}
+
+.contentPanel__inner {
+  --panelPad: clamp(18px, 3vw, 34px);
+
+  height: 100%;
+  padding: 0;
+
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: 0;
+}
+
+.contentPanel__body {
+  overflow: auto;
+  padding: var(--panelPad);
+  padding-right: calc(var(--panelPad) + 6px);
+}
+
+.contentPanel__placeholder {
+  margin: 0;
+  opacity: 0.85;
+}
+
+.contentPanel__back {
+  justify-self: start;
+  align-self: end;
+
+  margin: 0;
+  padding: 0 var(--panelPad) var(--panelPad);
+  margin-top: 16px;
+
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  color: #f59835;
+
+  font-family:
+    "Gotham Ultra",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+  font-size: clamp(14px, 1.4vw, 18px);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+
+  transition:
+    opacity 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.contentPanel__back:hover {
+  opacity: 1;
+  color: #ff3333;
+  transform: translateX(-4px);
+}
+
+.contentPanel__back:active {
+  opacity: 0.9;
+  transform: translateX(-2px);
+}
+
+@media (min-width: 901px) {
+  .contentPanel__inner {
+    padding-bottom: clamp(24px, 4vh, 64px);
+  }
+
+  .contentPanel__back {
+    font-size: clamp(18px, 1.8vw, 22px);
+  }
+}
+
+/* ==========================================================================
+   3) ESTRUTURA BASE DAS SEÇÕES
+   ========================================================================== */
+
+.panelSection {
+  display: grid;
+  gap: 14px;
+  padding-bottom: 12px;
+}
+
+.panelLead {
+  margin: 0;
+  font-size: clamp(18px, 1.7vw, 26px);
+  line-height: 1.25;
+  color: #f4f4f4;
+}
+
+.panelBullets {
+  display: grid;
+  gap: 8px;
+
+  margin: 0;
+  padding-left: 18px;
+
+  list-style: square;
+  color: #e5e1c3;
+
+  font-family:
+    "Gotham Ultra",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.panelSmall {
+  margin: 0;
+  opacity: 0.75;
+
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+/* ==========================================================================
+   4) MANIFESTO
+   ========================================================================== */
+
+.panelSection--manifesto {
+  display: grid;
+  gap: 20px;
+}
+
+.manifestoP {
+  max-width: 56ch;
+  margin: 0 auto;
+
+  color: #e5e1c3;
+  text-align: center;
+
+  font-family:
+    "Gotham Book",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+  font-size: clamp(16px, 1.6vw, 20px);
+  line-height: 1.2;
+}
+
+.manifestoHighlightA {
+  font-family: "Corben Regular", serif;
+  letter-spacing: 0.02em;
+}
+
+.manifestoHighlightB {
+  color: #f59835;
+  letter-spacing: 0.01em;
+
+  font-family:
+    "Gotham Bold",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+}
+
+.manifestoSelo {
+  display: block;
+  width: clamp(80px, 30vw, 200px);
+  height: auto;
+  margin: 22px auto 0;
+
+  opacity: 0.95;
+  user-select: none;
+  pointer-events: none;
+}
+
+@media (min-width: 901px) {
+  .panelSection--manifesto {
+    padding-top: 12vh;
+  }
+}
+
+@media (max-width: 900px) {
+  .panelSection--manifesto {
+    padding-top: 4vh;
+    gap: 12px;
+  }
+
+  .manifestoP {
+    max-width: 40ch;
+    font-size: 14px;
+    line-height: 1.42;
+  }
+}
+
+/* ==========================================================================
+   5) LOGO BOLACHINHA NO MODO CONTEÚDO
+   ========================================================================== */
+
+.bolachinhaLogo {
+  position: fixed;
+  z-index: 9;
+
+  opacity: 0;
+  scale: 1;
+
+  pointer-events: auto;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+
+  will-change: translate, opacity, scale;
+  transition:
+    translate 520ms cubic-bezier(0.2, 0.9, 0.2, 1),
+    opacity 260ms ease,
+    scale 160ms ease;
+}
+
+/* Desktop */
+@media (min-width: 901px) {
+  .bolachinhaLogo {
+    left: clamp(24px, 4vw, 64px);
+    top: clamp(24px, 4vw, 64px);
+
+    width: 10vw;
+    height: 20vh;
+
+    background-image: url("../assets/svg/bolachinha.svg");
+    translate: -140% 0;
+  }
+
+  body.mode-content .bolachinhaLogo {
+    opacity: 1;
+    translate: 0 0;
+    transition-delay: 120ms;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .bolachinhaLogo:hover {
+      scale: 1.03;
+      background-image: url("../assets/svg/bolachinha-b.svg");
+    }
+  }
+
+  .bolachinhaLogo:active {
+    scale: 0.98;
+    background-image: url("../assets/svg/bolachinha-b.svg");
+  }
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+  .bolachinhaLogo {
+    left: 50%;
+    top: 2vh;
+
+    width: clamp(100px, 30vw, 120px);
+    height: clamp(100px, 30vw, 120px);
+
+    background-image: url("../assets/svg/bolachinha.svg");
+    translate: -50% -140%;
+  }
+
+  body.mode-content .bolachinhaLogo {
+    opacity: 1;
+    translate: -50% 0;
+    transition-delay: 120ms;
+  }
+
+  .bolachinhaLogo:active {
+    scale: 0.98;
+    background-image: url("../assets/svg/bolachinha-b.svg");
+  }
+}
+
+/* ==========================================================================
+   6) LINKS
+   ========================================================================== */
+
+.panelSection--links {
+  display: grid;
+  gap: 18px;
+  padding-top: 18px;
+}
+
+.linksBtn {
+  display: block;
+  width: min(90vw, 560px);
+  margin: 0 auto;
+  padding: 10px 18px;
+
+  text-decoration: none;
+  border: none;
+  border-radius: 999px;
+  background: #ff3333;
+
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color 160ms ease,
+    transform 160ms ease;
+}
+
+.linksBtn__title {
+  color: #f59835;
+  text-align: center;
+  text-transform: uppercase;
+
+  font-family: "Corben Bold", serif;
+  font-size: 36px;
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+}
+
+.linksBtn__desc {
+  color: #e5e1c3;
+  text-align: center;
+
+  font-family:
+    "Gotham Book",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+.linksBtn__hl {
+  font-family:
+    "Gotham Bold",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .linksBtn:hover {
+    background: #f59835;
+    transform: scale(1.01);
+  }
+
+  .linksBtn:hover .linksBtn__title {
+    color: #ff3333;
+  }
+
+  .linksBtn:hover .linksBtn__desc {
+    color: #2a2a2a;
+  }
+}
+
+.linksBtn:active {
+  background: #f59835;
+  transform: scale(0.99);
+}
+
+.linksBtn:active .linksBtn__title {
+  color: #ff3333;
+}
+
+.linksBtn:active .linksBtn__desc {
+  color: #2a2a2a;
+}
+
+.linksBtn:focus-visible {
+  outline: 2px solid #f59835;
+  outline-offset: 3px;
+}
+
+@media (max-width: 900px) {
+  .panelSection--links {
+    gap: clamp(14px, 3.2vh, 26px);
+    padding-top: clamp(12px, 3vh, 22px);
+    padding-bottom: clamp(12px, 2.5vh, 18px);
+  }
+
+  .linksBtn {
+    width: 90%;
+    max-width: 520px;
+    padding: clamp(12px, 2.3vh, 16px) clamp(16px, 4vw, 22px);
+  }
+
+  .linksBtn__title {
+    margin-bottom: clamp(6px, 1.2vh, 10px);
+    font-size: clamp(22px, 7vw, 32px);
+    letter-spacing: 0.02em;
+  }
+
+  .linksBtn__desc {
+    font-size: clamp(12px, 3.4vw, 14px);
+    line-height: 1.2;
+  }
+}
+
+@media (min-width: 901px) {
+  .panelSection--links {
+    min-height: 100%;
+    gap: 50px;
+    padding-top: 0;
+    padding-bottom: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .linksBtn {
+    width: min(560px, 92%);
+    padding: 18px 80px;
+  }
+
+  .linksBtn__title {
+    margin-bottom: 12px;
+    font-size: 42px;
+    letter-spacing: 0.03em;
+  }
+
+  .linksBtn__desc {
+    font-size: 14px;
+    line-height: 1.25;
+  }
+}
+
+/* ==========================================================================
+   7) SERVIÇOS
+   ========================================================================== */
+
+.panelSection--servicos {
+  max-width: 620px;
+  margin: 0 auto;
+  padding-top: clamp(16px, 3vh, 26px);
+
+  display: grid;
+  gap: clamp(16px, 3vh, 26px);
+}
+
+.svcBlock {
+  display: grid;
+  gap: 10px;
+}
+
+.svcBlock + .svcBlock {
+  padding-top: 8px;
+}
+
+.svcHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.svcBullet {
+  opacity: 0.9;
+  color: #f59835;
+
+  font-family: "Corben Bold", serif;
+  font-size: clamp(22px, 3.8vw, 32px);
+  line-height: 1;
+}
+
+.svcTitle {
+  color: #f59835;
+
+  font-family: "Corben Bold", serif;
+  font-size: clamp(24px, 4.2vw, 38px);
+  line-height: 1.05;
+  letter-spacing: 0.015em;
+}
+
+.svcDesc {
+  max-width: 58ch;
+  margin-left: calc(clamp(22px, 3.8vw, 32px) + 10px);
+
+  color: #e5e1c3;
+  opacity: 0.92;
+
+  font-family:
+    "Gotham Book",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+  font-size: clamp(13px, 2.2vw, 15px);
+  line-height: 1.28;
+}
+
+.svcCta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  width: min(560px, 90%);
+  height: 62px;
+  margin: clamp(10px, 2.2vh, 18px) auto 0;
+
+  text-decoration: none;
+  border-radius: 999px;
+  background: #ff3333;
+
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color 160ms ease,
+    transform 160ms ease;
+}
+
+.svcCta__label {
+  color: #e5e1c3;
+  line-height: 1;
+
+  font-family:
+    "Gotham Bold",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+  font-size: clamp(18px, 2vw, 22px);
+  letter-spacing: 0.06em;
+}
+
+.svcCta__icon {
+  display: inline-block;
+  flex: 0 0 auto;
+
+  width: 22px;
+  height: 22px;
+
+  background-color: #e5e1c3;
+
+  -webkit-mask-image: url("../assets/svg/icon-whats.svg");
+  mask-image: url("../assets/svg/icon-whats.svg");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .svcCta:hover {
+    background: #f59835;
+    transform: scale(1.01);
+  }
+
+  .svcCta:hover .svcCta__label {
+    color: #2a2a2a;
+  }
+
+  .svcCta:hover .svcCta__icon {
+    background-color: #2a2a2a;
+  }
+}
+
+.svcCta:active {
+  background: #f59835;
+  transform: scale(0.99);
+}
+
+.svcCta:active .svcCta__label {
+  color: #2a2a2a;
+}
+
+.svcCta:active .svcCta__icon {
+  background-color: #2a2a2a;
+}
+
+@media (min-width: 901px) {
+  .panelSection--servicos {
+    min-height: 100%;
+    gap: 22px;
+    padding-top: 0;
+    padding-bottom: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .svcCta {
+    margin-top: 80px;
+  }
+}
+
+@media (max-width: 900px) {
+  .panelSection--servicos {
+    gap: 14px;
+    padding-top: 4vh;
+  }
+
+  .svcBlock {
+    gap: 8px;
+  }
+
+  .svcHead {
+    gap: 8px;
+  }
+
+  .svcTitle {
+    font-size: clamp(20px, 5.6vw, 28px);
+  }
+
+  .svcDesc {
+    margin-left: calc(clamp(22px, 3.8vw, 32px) + 8px);
+    font-size: 12px;
+    line-height: 1.22;
+  }
+
+  .svcCta {
+    height: 56px;
+  }
+
+  .svcCta__label {
+    font-size: 15px;
+    letter-spacing: 0.05em;
+  }
+}
+
+/* ==========================================================================
+   8) CONTATO
+   ========================================================================== */
+
+.panelSection--contato {
+  display: grid;
+  gap: clamp(12px, 2.4vh, 18px);
+  padding-top: clamp(12px, 2.8vh, 24px);
+}
+
+.ctTitle {
+  margin: 0;
+
+  color: #f59835;
+  text-align: center;
+
+  font-family: "Corben Bold", serif;
+  font-size: clamp(22px, 5.4vw, 34px);
+  line-height: 1.1;
+}
+
+.ctIntro {
+  margin: 0;
+
+  color: #e5e1c3;
+  text-align: center;
+
+  font-family:
+    "Gotham Book",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+  font-size: clamp(13px, 3.5vw, 12px);
+  line-height: 1.25;
+}
+
+.ctFormBox {
+  padding: clamp(14px, 2.6vh, 18px);
+  background: #f59835;
+  border-radius: 24px;
+}
+
+.ctForm {
+  display: grid;
+  gap: 10px;
+}
+
+.ctField {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px 14px;
+  background: #f4f4f4;
+  border-radius: 999px;
+}
+
+.ctField--msg {
+  align-items: stretch;
+  padding: 12px 14px;
+  border-radius: 20px;
+}
+
+.ctIcon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+
+  background-color: #2a2a2a;
+
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.ctIcon--user {
+  -webkit-mask-image: url("../assets/svg/icon-user.svg");
+  mask-image: url("../assets/svg/icon-user.svg");
+}
+
+.ctIcon--mail {
+  -webkit-mask-image: url("../assets/svg/icon-mail.svg");
+  mask-image: url("../assets/svg/icon-mail.svg");
+}
+
+.ctIcon--phone {
+  -webkit-mask-image: url("../assets/svg/icon-phone.svg");
+  mask-image: url("../assets/svg/icon-phone.svg");
+}
+
+.ctInput {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+
+  color: #2a2a2a;
+
+  font-family:
+    "Gotham Book",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.ctInput::placeholder {
+  color: #2a2a2a;
+  opacity: 0.85;
+}
+
+.ctTextarea {
+  resize: none;
+  min-height: 110px;
+}
+
+.ctLegend {
+  margin-top: 2px;
+
+  color: #2a2a2a;
+  text-align: left;
+
+  font-family:
+    "Gotham Book",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+  font-size: 12px;
+}
+
+.ctSend {
+  height: 52px;
+
+  border: none;
+  border-radius: 999px;
+  background: #2a2a2a;
+
+  color: #e5e1c3;
+
+  font-family:
+    "Gotham Bold",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+  letter-spacing: 0.08em;
+
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color 160ms ease,
+    transform 160ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ctSend:hover {
+    background: #ff3333;
+    transform: scale(1.01);
+  }
+}
+
+.ctSend:active {
+  background: #ff3333;
+  transform: scale(0.99);
+}
+
+.ctInfo {
+  margin: 0;
+
+  color: #e5e1c3;
+  text-align: center;
+  opacity: 0.95;
+
+  font-family:
+    "Gotham Book",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.ctEmail {
+  color: #f59835;
+  text-align: center;
+  text-decoration: none;
+
+  font-family:
+    "Gotham Bold",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+  font-size: clamp(14px, 3.8vw, 18px);
+  letter-spacing: 0.02em;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ctEmail:hover {
+    text-decoration: underline;
+  }
+}
+
+.ctSocial {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.ctSocialBtn {
+  display: grid;
+  place-items: center;
+
+  width: 46px;
+  height: 46px;
+
+  text-decoration: none;
+  border-radius: 999px;
+  background: #f59835;
+
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color 160ms ease,
+    transform 160ms ease;
+}
+
+.ctSocialIcon {
+  width: 22px;
+  height: 22px;
+
+  background-color: #2a2a2a;
+
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.ctSocialIcon--insta {
+  -webkit-mask-image: url("../assets/svg/icon-insta.svg");
+  mask-image: url("../assets/svg/icon-insta.svg");
+}
+
+.ctSocialIcon--behance {
+  -webkit-mask-image: url("../assets/svg/icon-behance.svg");
+  mask-image: url("../assets/svg/icon-behance.svg");
+}
+
+.ctSocialIcon--linkedin {
+  -webkit-mask-image: url("../assets/svg/icon-linkedin.svg");
+  mask-image: url("../assets/svg/icon-linkedin.svg");
+}
+
+.ctSocialIcon--whats {
+  -webkit-mask-image: url("../assets/svg/icon-whats.svg");
+  mask-image: url("../assets/svg/icon-whats.svg");
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ctSocialBtn:hover {
+    background: #ff3333;
+    transform: scale(1.05);
+  }
+
+  .ctSocialBtn:hover .ctSocialIcon {
+    background-color: #e5e1c3;
+  }
+}
+
+.ctSocialBtn:active {
+  background: #ff3333;
+  transform: scale(0.98);
+}
+
+.ctSocialBtn:active .ctSocialIcon {
+  background-color: #e5e1c3;
+}
+
+@media (min-width: 901px) {
+  .panelSection--contato {
+    min-height: 100%;
+    max-width: 620px;
+    margin: 0 auto;
+    gap: 14px;
+    padding-top: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 900px) {
+  .panelSection--contato {
+    gap: 10px;
+    padding-top: 10px;
+  }
+
+  .ctTitle {
+    white-space: nowrap;
+    font-size: clamp(18px, 5.2vw, 22px);
+  }
+
+  .ctIntro {
+    font-size: 11px;
+    line-height: 1.18;
+  }
+
+  .ctFormBox {
+    padding: 12px;
+    border-radius: 20px;
+  }
+
+  .ctForm {
+    gap: 8px;
+  }
+
+  .ctField {
+    padding: 8px 12px;
+  }
+
+  .ctField--msg {
+    padding: 10px 12px;
+  }
+
+  .ctTextarea {
+    min-height: 92px;
+  }
+
+  .ctLegend {
+    font-size: 11px;
+  }
+
+  .ctSend {
+    height: 48px;
+  }
+
+  .ctInfo {
+    font-size: 9px;
+    line-height: 1.15;
+  }
+
+  .ctSocialBtn {
+    width: 42px;
+    height: 42px;
+  }
+
+  .ctSocialIcon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* ==========================================================================
+   9) ANIMAÇÕES STAGGER
+   ========================================================================== */
+
+@keyframes panelStaggerIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Manifesto */
+body.mode-content[data-active="manifesto"] .panelSection--manifesto .manifestoP,
+body.mode-content[data-active="manifesto"] .panelSection--manifesto .manifestoSelo {
+  opacity: 0;
+  animation: panelStaggerIn 420ms cubic-bezier(0.2, 0.9, 0.2, 1) both;
+}
+
+body.mode-content[data-active="manifesto"] .panelSection--manifesto .manifestoP:nth-of-type(1) {
+  animation-delay: 70ms;
+}
+
+body.mode-content[data-active="manifesto"] .panelSection--manifesto .manifestoP:nth-of-type(2) {
+  animation-delay: 150ms;
+}
+
+body.mode-content[data-active="manifesto"] .panelSection--manifesto .manifestoP:nth-of-type(3) {
+  animation-delay: 230ms;
+}
+
+body.mode-content[data-active="manifesto"] .panelSection--manifesto .manifestoP:nth-of-type(4) {
+  animation-delay: 310ms;
+}
+
+body.mode-content[data-active="manifesto"] .panelSection--manifesto .manifestoP:nth-of-type(5) {
+  animation-delay: 390ms;
+}
+
+body.mode-content[data-active="manifesto"] .panelSection--manifesto .manifestoSelo {
+  animation-delay: 470ms;
+}
+
+/* Links */
+body.mode-content[data-active="links"] .panelSection--links .linksBtn {
+  opacity: 0;
+  animation: panelStaggerIn 420ms cubic-bezier(0.2, 0.9, 0.2, 1) both;
+}
+
+body.mode-content[data-active="links"] .panelSection--links .linksBtn:nth-of-type(1) {
+  animation-delay: 90ms;
+}
+
+body.mode-content[data-active="links"] .panelSection--links .linksBtn:nth-of-type(2) {
+  animation-delay: 190ms;
+}
+
+body.mode-content[data-active="links"] .panelSection--links .linksBtn:nth-of-type(3) {
+  animation-delay: 290ms;
+}
+
+/* Serviços */
+body.mode-content[data-active="servicos"] .panelSection--servicos .svcBlock,
+body.mode-content[data-active="servicos"] .panelSection--servicos .svcCta {
+  opacity: 0;
+  animation: panelStaggerIn 420ms cubic-bezier(0.2, 0.9, 0.2, 1) both;
+}
+
+body.mode-content[data-active="servicos"] .panelSection--servicos .svcBlock:nth-of-type(1) {
+  animation-delay: 70ms;
+}
+
+body.mode-content[data-active="servicos"] .panelSection--servicos .svcBlock:nth-of-type(2) {
+  animation-delay: 150ms;
+}
+
+body.mode-content[data-active="servicos"] .panelSection--servicos .svcBlock:nth-of-type(3) {
+  animation-delay: 230ms;
+}
+
+body.mode-content[data-active="servicos"] .panelSection--servicos .svcBlock:nth-of-type(4) {
+  animation-delay: 310ms;
+}
+
+body.mode-content[data-active="servicos"] .panelSection--servicos .svcCta {
+  animation-delay: 390ms;
+}
+
+/* Contato */
+body.mode-content[data-active="contato"] .panelSection--contato .ctTitle,
+body.mode-content[data-active="contato"] .panelSection--contato .ctIntro,
+body.mode-content[data-active="contato"] .panelSection--contato .ctFormBox,
+body.mode-content[data-active="contato"] .panelSection--contato .ctInfo,
+body.mode-content[data-active="contato"] .panelSection--contato .ctEmail,
+body.mode-content[data-active="contato"] .panelSection--contato .ctSocial {
+  opacity: 0;
+  animation: panelStaggerIn 420ms cubic-bezier(0.2, 0.9, 0.2, 1) both;
+}
+
+body.mode-content[data-active="contato"] .panelSection--contato .ctTitle {
+  animation-delay: 60ms;
+}
+
+body.mode-content[data-active="contato"] .panelSection--contato .ctIntro {
+  animation-delay: 140ms;
+}
+
+body.mode-content[data-active="contato"] .panelSection--contato .ctFormBox {
+  animation-delay: 220ms;
+}
+
+body.mode-content[data-active="contato"] .panelSection--contato .ctInfo {
+  animation-delay: 300ms;
+}
+
+body.mode-content[data-active="contato"] .panelSection--contato .ctEmail {
+  animation-delay: 380ms;
+}
+
+body.mode-content[data-active="contato"] .panelSection--contato .ctSocial {
+  animation-delay: 460ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.mode-content[data-active="manifesto"] .panelSection--manifesto .manifestoP,
+  body.mode-content[data-active="manifesto"] .panelSection--manifesto .manifestoSelo,
+  body.mode-content[data-active="links"] .panelSection--links .linksBtn,
+  body.mode-content[data-active="servicos"] .panelSection--servicos .svcBlock,
+  body.mode-content[data-active="servicos"] .panelSection--servicos .svcCta,
+  body.mode-content[data-active="contato"] .panelSection--contato .ctTitle,
+  body.mode-content[data-active="contato"] .panelSection--contato .ctIntro,
+  body.mode-content[data-active="contato"] .panelSection--contato .ctFormBox,
+  body.mode-content[data-active="contato"] .panelSection--contato .ctInfo,
+  body.mode-content[data-active="contato"] .panelSection--contato .ctEmail,
+  body.mode-content[data-active="contato"] .panelSection--contato .ctSocial {
+    opacity: 1;
+    animation: none;
+    transform: none;
+  }
+}

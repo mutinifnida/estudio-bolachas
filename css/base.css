@@ -1,0 +1,301 @@
+:root {
+  --reveal: 0;
+}
+
+/* ==========================================================================
+   1) FONTS
+   ========================================================================== */
+
+/* Gotham Ultra */
+@font-face {
+  font-family: "Gotham Ultra";
+  src:
+    url("../assets/fonts/GothamUltra.woff2") format("woff2"),
+    url("../assets/fonts/GothamUltra.woff") format("woff");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Gotham Ultra Italic */
+@font-face {
+  font-family: "Gotham Ultra Italic";
+  src:
+    url("../assets/fonts/GothamUltraItalic.woff2") format("woff2"),
+    url("../assets/fonts/GothamUltraItalic.woff") format("woff");
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Gotham Book */
+@font-face {
+  font-family: "Gotham Book";
+  src:
+    url("../assets/fonts/GothamBook.woff2") format("woff2"),
+    url("../assets/fonts/GothamBook.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Gotham Bold */
+@font-face {
+  font-family: "Gotham Bold";
+  src:
+    url("../assets/fonts/GothamBold.woff2") format("woff2"),
+    url("../assets/fonts/GothamBold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Corben */
+@font-face {
+  font-family: "Corben Regular";
+  src: url("../assets/fonts/Corben-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Corben Bold";
+  src: url("../assets/fonts/Corben-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ==========================================================================
+   2) RESET + BASE
+   ========================================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  overflow-x: hidden;
+
+  color: #2a2a2a;
+  background: #ff3333;
+
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+}
+
+/* Fundo reativo proporcional ao reveal */
+body {
+  background: color-mix(
+    in srgb,
+    #f59835 calc((1 - var(--reveal)) * 100%),
+    #ff3333 calc(var(--reveal) * 100%)
+  );
+}
+
+/* ==========================================================================
+   3) FUNDO VIVO
+   - Mantido desligado visualmente por enquanto
+   ========================================================================== */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: -20%;
+  z-index: 0;
+
+  pointer-events: none;
+  transform: translate3d(0, 0, 0);
+
+  background:
+    radial-gradient(
+      closest-side at calc(50% + var(--bgx, 0px)) calc(50% + var(--bgy, 0px)),
+      rgba(245, 152, 53, 0.22),
+      transparent 60%
+    ),
+    radial-gradient(
+      closest-side at calc(55% - var(--bgx, 0px)) calc(45% - var(--bgy, 0px)),
+      rgba(229, 225, 195, 0.14),
+      transparent 62%
+    ),
+    radial-gradient(closest-side at 40% 65%, rgba(42, 42, 42, 0.08), transparent 60%);
+
+  mix-blend-mode: soft-light;
+  filter: blur(18px);
+  opacity: 0.75;
+
+  animation: bg-drift 10s ease-in-out infinite;
+}
+
+/* desligado temporariamente */
+body::before {
+  opacity: 0 !important;
+}
+
+@keyframes bg-drift {
+  0% {
+    transform: translate3d(-0.6%, -0.3%, 0) scale(1.01);
+  }
+  50% {
+    transform: translate3d(0.7%, 0.4%, 0) scale(1.02);
+  }
+  100% {
+    transform: translate3d(-0.6%, -0.3%, 0) scale(1.01);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   4) GRAIN
+   ========================================================================== */
+
+.grain {
+  position: fixed;
+  inset: -30%;
+  z-index: 6;
+
+  pointer-events: none;
+  transform: translate3d(0, 0, 0);
+
+  opacity: 0.08;
+  mix-blend-mode: overlay;
+  filter: contrast(92%) brightness(112%);
+
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.22) 0px,
+      rgba(255, 255, 255, 0.22) 1px,
+      transparent 2px,
+      transparent 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.16) 0px,
+      rgba(0, 0, 0, 0.16) 1px,
+      transparent 2px,
+      transparent 6px
+    ),
+    radial-gradient(circle at 30% 20%, rgba(0, 0, 0, 0.1) 0%, transparent 42%),
+    radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 44%);
+
+  animation: grain-drift 7.5s steps(10) infinite;
+}
+
+@keyframes grain-drift {
+  0% {
+    transform: translate3d(-1.5%, -1%, 0);
+  }
+  20% {
+    transform: translate3d(1%, -1.8%, 0);
+  }
+  40% {
+    transform: translate3d(1.8%, 0.8%, 0);
+  }
+  60% {
+    transform: translate3d(-1.6%, 1.6%, 0);
+  }
+  80% {
+    transform: translate3d(0.8%, -0.6%, 0);
+  }
+  100% {
+    transform: translate3d(-1.5%, -1%, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   5) GATE INICIAL DE VISIBILIDADE
+   - Antes de abrir, só a roseta permanece visível
+   ========================================================================== */
+
+body:not(.site-open) .radial__list,
+body:not(.site-open) .radial__dots,
+body:not(.site-open) .gfxBand,
+body:not(.site-open) .bolachasHeader,
+body:not(.site-open) .bolachinhaLogo,
+body:not(.site-open) .contentTitle,
+body:not(.site-open) .contentBackdrop,
+body:not(.site-open) .contentPanel,
+body:not(.site-open) .grain {
+  opacity: 0;
+}
+
+body:not(.site-open) .radial,
+body:not(.site-open) .bolachasHeader {
+  pointer-events: none;
+}
+
+body:not(.site-open) .contentPanel {
+  translate: 110% 0;
+}
+
+body.site-open .radial__list,
+body.site-open .radial__dots,
+body.site-open .gfxBand,
+body.site-open .bolachasHeader,
+body.site-open .bolachinhaLogo,
+body.site-open .contentTitle {
+  transition: opacity 420ms ease;
+}
+
+/* ==========================================================================
+   6) BLINDAGEM DO PAINEL FORA DO MODE-CONTENT
+   ========================================================================== */
+
+body:not(.mode-content) .contentBackdrop {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transition: none !important;
+}
+
+body:not(.mode-content) .contentPanel {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transition: none !important;
+}
+
+body.mode-content .contentBackdrop {
+  visibility: visible !important;
+  transition: opacity 220ms ease !important;
+}
+
+body.mode-content .contentPanel {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* ==========================================================================
+   7) INTERAÇÃO GLOBAL
+   ========================================================================== */
+
+.radial,
+.radial__list,
+.radial__item {
+  pointer-events: auto;
+}

@@ -1,0 +1,417 @@
+/* ==========================================================================
+   1) MENU RADIAL
+   ========================================================================== */
+
+.radial {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+
+  overflow: visible;
+
+  /* Variáveis do sistema */
+  --safe: clamp(16px, 2.5vw, 32px);
+  --radius: 275px;
+  --cx: calc(var(--radius) * 0.18 + var(--safe));
+  --cy: calc(50vh - 40px);
+  --dotsH: 70px;
+}
+
+/* Lista radial */
+.radial__list {
+  position: absolute;
+  left: var(--cx);
+  top: var(--cy);
+
+  width: 0;
+  height: 0;
+
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Breakpoints do sistema radial */
+@media (max-width: 520px) {
+  .radial {
+    --radius: 140px;
+    --cy: 30vh;
+    width: 520px;
+    height: 520px;
+  }
+}
+
+@media (min-width: 521px) and (max-width: 900px) {
+  .radial {
+    --radius: 150px;
+  }
+}
+
+@media (min-width: 901px) {
+  .radial {
+    --radius: 275px;
+  }
+}
+
+/* ==========================================================================
+   2) ROSETA REATIVA
+   ========================================================================== */
+
+.radial {
+  --rosetaSize: clamp(900px, 120vmax, 1700px);
+  --rosetaDx: 0px;
+  --rosetaDy: 0px;
+}
+
+/* Camada final (amarela) */
+.radial::before {
+  content: "";
+  position: fixed;
+
+  left: calc(var(--cx) + var(--rosetaDx));
+  top: calc(var(--cy) + var(--rosetaDy));
+
+  width: var(--rosetaSize);
+  height: var(--rosetaSize);
+
+  z-index: 0;
+  pointer-events: none;
+
+  transform: translate(-50%, -50%) rotate(var(--rosetaAngle, 0deg));
+  transform-origin: 50% 50%;
+
+  background: url("../assets/svg/roseta-amarela.svg") no-repeat center / contain;
+  opacity: var(--reveal);
+}
+
+/* Camada inicial (vermelha) */
+.radial::after {
+  content: "";
+  position: fixed;
+
+  left: calc(var(--cx) + var(--rosetaDx));
+  top: calc(var(--cy) + var(--rosetaDy));
+
+  width: var(--rosetaSize);
+  height: var(--rosetaSize);
+
+  z-index: 2;
+  pointer-events: none;
+
+  transform: translate(-50%, -50%) rotate(var(--rosetaAngle, 0deg));
+  transform-origin: 50% 50%;
+
+  background: url("../assets/svg/roseta-vermelha.svg") no-repeat center / contain;
+  opacity: calc(1 - var(--reveal));
+}
+
+/* Ajustes responsivos da roseta */
+@media (max-width: 520px) {
+  .radial {
+    --rosetaSize: 90vh;
+    --rosetaDx: 20vw;
+    --rosetaDy: -6vh;
+  }
+}
+
+@media (min-width: 500px) and (max-width: 900px) {
+  .radial {
+    --rosetaSize: 90vh;
+    --rosetaDx: 10vw;
+    --rosetaDy: -14vh;
+  }
+}
+
+@media (min-width: 901px) {
+  .radial {
+    --rosetaSize: 96vw;
+    --rosetaDx: 300px;
+    --rosetaDy: 40px;
+  }
+}
+
+/* ==========================================================================
+   3) ITENS DO MENU RADIAL
+   ========================================================================== */
+
+.radial__item {
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+
+  font-family:
+    "Gotham Ultra Italic",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+  font-weight: 800;
+  font-size: clamp(34px, 6.2vw, 74px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+
+  color: #f59835;
+  transition: color 220ms ease;
+}
+
+.radial__item.is-active {
+  color: #e5e1c3;
+}
+
+/* ==========================================================================
+   4) DOTS
+   ========================================================================== */
+
+.radial__dots {
+  position: absolute;
+  left: clamp(10px, 2vw, 18px);
+
+  top: clamp(
+    calc(var(--dotsH) / 2 + var(--safe)),
+    var(--cy),
+    calc(100vh - var(--dotsH) / 2 - var(--safe))
+  );
+  transform: translateY(-50%);
+
+  z-index: 5;
+  display: grid;
+  gap: 10px;
+
+  pointer-events: none;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+
+  background: #f59835;
+  transition:
+    transform 180ms ease,
+    opacity 180ms ease,
+    background-color 180ms ease;
+}
+
+.dot.is-active {
+  background: #e5e1c3;
+}
+
+@media (min-width: 901px) {
+  .radial__dots {
+    top: var(--cy);
+    transform: translateY(-50%);
+  }
+}
+
+/* ==========================================================================
+   5) MICROFEEDBACK DE SNAP
+   ========================================================================== */
+
+body.is-snapping .radial__item.is-active {
+  animation: snap-pop 220ms ease-out;
+}
+
+body.is-snapping .dot.is-active {
+  animation: snap-pop-dot 220ms ease-out;
+}
+
+@keyframes snap-pop {
+  0% {
+    filter: blur(0px);
+  }
+  45% {
+    filter: blur(0px);
+  }
+  100% {
+    filter: blur(0px);
+  }
+}
+
+@keyframes snap-pop-dot {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.35);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ==========================================================================
+   6) FAIXA GRÁFICA / RODAPÉ
+   ========================================================================== */
+
+.gfxBand {
+  position: fixed;
+  z-index: 4;
+
+  margin: 0;
+  padding: 0;
+
+  pointer-events: none;
+  background: #f59835;
+}
+
+.gfxBand__txt,
+.gfxBand__barcode {
+  position: absolute;
+  background-color: #2a2a2a;
+
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+}
+
+/* Desktop */
+@media (min-width: 901px) {
+  .gfxBand {
+    top: 0;
+    right: 0;
+    width: 10vw;
+    height: 100vh;
+  }
+
+  .gfxBand__barcode {
+    top: 50%;
+    right: 0;
+    width: 4vw;
+    height: 60vh;
+
+    transform: translateY(-50%);
+
+    -webkit-mask-position: center right;
+    mask-position: center right;
+
+    -webkit-mask-image: url("../assets/svg/barcode-vert.svg");
+    mask-image: url("../assets/svg/barcode-vert.svg");
+  }
+
+  .gfxBand__txt {
+    top: 50%;
+    right: 5vw;
+    width: 4vw;
+    height: 60vh;
+
+    transform: translateY(-50%);
+
+    -webkit-mask-position: center;
+    mask-position: center;
+
+    -webkit-mask-image: url("../assets/svg/txt-rodape.svg");
+    mask-image: url("../assets/svg/txt-rodape.svg");
+  }
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+  .gfxBand {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: auto;
+
+    width: 100vw;
+    height: 13vh;
+  }
+
+  .gfxBand__barcode {
+    left: 50%;
+    bottom: 0;
+    width: 60vw;
+    height: 6vh;
+
+    transform: translateX(-50%);
+
+    -webkit-mask-position: bottom center;
+    mask-position: bottom center;
+
+    -webkit-mask-image: url("../assets/svg/barcode-hori.svg");
+    mask-image: url("../assets/svg/barcode-hori.svg");
+  }
+
+  .gfxBand__txt {
+    left: 50%;
+    bottom: 6.5vh;
+    width: 50vw;
+    height: 5vh;
+
+    transform: translateX(-50%);
+
+    -webkit-mask-position: bottom center;
+    mask-position: bottom center;
+
+    -webkit-mask-image: url("../assets/svg/txt-rodape-mob.svg");
+    mask-image: url("../assets/svg/txt-rodape-mob.svg");
+  }
+}
+
+/* ==========================================================================
+   7) HEADER BOLACHAS
+   ========================================================================== */
+
+.bolachasHeader {
+  position: fixed;
+  z-index: 5;
+
+  pointer-events: auto;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+/* Desktop */
+@media (min-width: 901px) {
+  .bolachasHeader {
+    right: 18vw;
+    top: 50%;
+
+    width: clamp(80px, 10vw, 180px);
+    height: 96vh;
+    max-height: none;
+
+    transform: translateY(-50%);
+
+    background-image: url("../assets/svg/bolachas-header.svg");
+  }
+
+  .bolachasHeader:hover,
+  .bolachasHeader:active {
+    background-image: url("../assets/svg/bolachas-header-b.svg");
+  }
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+  .bolachasHeader {
+    left: 50%;
+    bottom: 14vh;
+
+    width: 96vw;
+    max-width: 520px;
+    height: 52px;
+
+    transform: translateX(-50%);
+
+    background-image: url("../assets/svg/bolachas-header-mob.svg");
+  }
+
+  .bolachasHeader:active {
+    background-image: url("../assets/svg/bolachas-header-mob-b.svg");
+  }
+}

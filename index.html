@@ -1,33 +1,26 @@
 <!doctype html>
 <html lang="pt-BR">
   <head>
+    <!-- ========================================
+         META BÁSICA
+         ======================================== -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Estúdio Bolachas</title>
+    <meta
+      name="description"
+      content="Estúdio criativo. Ideias com personalidade, design com atitude."
+    />
 
-    <!-- PRÉ LOADS DE IMAGEM -->
-    <link rel="preload" as="image" href="assets/svg/bolachinha-entry.svg" />
-    <link rel="preload" as="image" href="assets/svg/bolachinha-entry-b.svg" />
-    <link rel="preload" as="image" href="assets/svg/bolachinha.svg" />
-    <link rel="preload" as="image" href="assets/svg/bolachinha-b.svg" />
-
-    <link rel="preload" as="image" href="assets/svg/roseta-amarela.svg" />
-    <link rel="preload" as="image" href="assets/svg/roseta-vermelha.svg" />
-
-    <link rel="preload" as="image" href="assets/svg/txt-rodape.svg" />
-    <link rel="preload" as="image" href="assets/svg/txt-rodape-mob.svg" />
-    <link rel="preload" as="image" href="assets/svg/barcode-vert.svg" />
-    <link rel="preload" as="image" href="assets/svg/barcode-hori.svg" />
-
-    <link rel="preload" as="image" href="assets/svg/bolachas-header.svg" />
-    <link rel="preload" as="image" href="assets/svg/bolachas-header-b.svg" />
-    <link rel="preload" as="image" href="assets/svg/bolachas-header-mob.svg" />
-    <link rel="preload" as="image" href="assets/svg/bolachas-header-mob-b.svg" />
-    <!-- FIM DOS PRÉ LOADS -->
-
+    <!-- ========================================
+         ÍCONES
+         ======================================== -->
     <link rel="icon" type="image/svg+xml" href="assets/img/thumb-bolachas/thumb-bolachas.svg" />
     <link rel="icon" type="image/png" href="assets/img/thumb-bolachas/thumb-bolachas.png" />
 
+    <!-- ========================================
+         SOCIAL SHARE
+         ======================================== -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Estúdio Bolachas" />
     <meta
@@ -46,59 +39,98 @@
     />
     <meta name="twitter:image" content="assets/img/thumb-bolachas/thumb-bolachas.jpg" />
 
-    <!-- CSS do site (radial) -->
-    <link rel="stylesheet" href="css/style.css" />
-    <!-- CSS da abertura (overlay) -->
+    <!-- ========================================
+         PRÉ-CARREGAMENTO DE IMAGENS
+         ======================================== -->
+    <link rel="preload" as="image" href="assets/svg/bolachinha-entry.svg" />
+    <link rel="preload" as="image" href="assets/svg/bolachinha-entry-b.svg" />
+    <link rel="preload" as="image" href="assets/svg/bolachinha.svg" />
+    <link rel="preload" as="image" href="assets/svg/bolachinha-b.svg" />
+
+    <link rel="preload" as="image" href="assets/svg/roseta-amarela.svg" />
+    <link rel="preload" as="image" href="assets/svg/roseta-vermelha.svg" />
+
+    <link rel="preload" as="image" href="assets/svg/txt-rodape.svg" />
+    <link rel="preload" as="image" href="assets/svg/txt-rodape-mob.svg" />
+    <link rel="preload" as="image" href="assets/svg/barcode-vert.svg" />
+    <link rel="preload" as="image" href="assets/svg/barcode-hori.svg" />
+
+    <link rel="preload" as="image" href="assets/svg/bolachas-header.svg" />
+    <link rel="preload" as="image" href="assets/svg/bolachas-header-b.svg" />
+    <link rel="preload" as="image" href="assets/svg/bolachas-header-mob.svg" />
+    <link rel="preload" as="image" href="assets/svg/bolachas-header-mob-b.svg" />
+
+    <!-- ========================================
+         CSS
+         Ordem:
+         1. Base global
+         2. Abertura
+         3. Home / radial
+         4. Conteúdo interno
+         ======================================== -->
+    <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/entry.css" />
+    <link rel="stylesheet" href="css/home.css" />
+    <link rel="stylesheet" href="css/content.css" />
   </head>
 
   <body>
-    <!-- Camada de ruído por cima do fundo vermelho -->
+    <!-- ========================================
+         CAMADA GLOBAL DE FUNDO
+         ======================================== -->
     <div class="grain" aria-hidden="true"></div>
 
-    <!-- =========================
-         SITE (MENU RADIAL)
-         ========================= -->
+    <!-- ========================================
+         ESTRUTURA PRINCIPAL DO SITE
+         ======================================== -->
+    <main class="siteShell" id="siteShell">
+      <!-- MENU RADIAL -->
+      <nav class="radial" aria-label="Menu giratório">
+        <ul class="radial__list" id="radialList" role="list">
+          <li class="radial__item" data-key="manifesto">Manifesto</li>
+          <li class="radial__item" data-key="links">Links</li>
+          <li class="radial__item" data-key="servicos">Serviços</li>
+          <li class="radial__item" data-key="contato">Contato</li>
+        </ul>
 
-    <nav class="radial" aria-label="Menu giratório">
-      <ul class="radial__list" id="radialList" role="list">
-        <li class="radial__item" data-key="manifesto">Manifesto</li>
-        <li class="radial__item" data-key="links">Links</li>
-        <li class="radial__item" data-key="servicos">Serviços</li>
-        <li class="radial__item" data-key="contato">Contato</li>
-      </ul>
-
-      <div class="radial__dots" id="radialDots" aria-label="Indicador do menu">
-        <span class="dot" data-dot="0" aria-hidden="true"></span>
-        <span class="dot" data-dot="1" aria-hidden="true"></span>
-        <span class="dot" data-dot="2" aria-hidden="true"></span>
-        <span class="dot" data-dot="3" aria-hidden="true"></span>
-      </div>
-    </nav>
-
-    <div class="bolachasHeader" aria-hidden="true"></div>
-
-    <div class="gfxBand" aria-hidden="true">
-      <div class="gfxBand__txt" aria-hidden="true"></div>
-      <div class="gfxBand__barcode" aria-hidden="true"></div>
-    </div>
-
-    <div class="contentTitle" id="contentTitle" aria-hidden="true"></div>
-    <div class="bolachinhaLogo" aria-hidden="true"></div>
-
-    <div class="contentBackdrop" id="contentBackdrop" aria-hidden="true"></div>
-
-    <aside class="contentPanel" id="contentPanel" aria-hidden="true">
-      <div class="contentPanel__inner">
-        <div class="contentPanel__body" id="contentPanelBody">
-          <p class="contentPanel__placeholder">Conteúdo da seção (em breve).</p>
+        <div class="radial__dots" id="radialDots" aria-label="Indicador do menu">
+          <span class="dot" data-dot="0" aria-hidden="true"></span>
+          <span class="dot" data-dot="1" aria-hidden="true"></span>
+          <span class="dot" data-dot="2" aria-hidden="true"></span>
+          <span class="dot" data-dot="3" aria-hidden="true"></span>
         </div>
+      </nav>
 
-        <button class="contentPanel__back" id="contentBack" type="button">← VOLTAR</button>
+      <!-- ELEMENTOS FIXOS DA HOME / CONTEÚDO -->
+      <div class="bolachasHeader" aria-hidden="true"></div>
+
+      <div class="gfxBand" aria-hidden="true">
+        <div class="gfxBand__txt" aria-hidden="true"></div>
+        <div class="gfxBand__barcode" aria-hidden="true"></div>
       </div>
-    </aside>
 
-    <!-- SEÇÃO MANIFESTO -->
+      <div class="contentTitle" id="contentTitle" aria-hidden="true"></div>
+      <div class="bolachinhaLogo" aria-hidden="true"></div>
+
+      <!-- BACKDROP E PAINEL DE CONTEÚDO -->
+      <div class="contentBackdrop" id="contentBackdrop" aria-hidden="true"></div>
+
+      <aside class="contentPanel" id="contentPanel" aria-hidden="true">
+        <div class="contentPanel__inner">
+          <div class="contentPanel__body" id="contentPanelBody">
+            <p class="contentPanel__placeholder">Conteúdo da seção (em breve).</p>
+          </div>
+
+          <button class="contentPanel__back" id="contentBack" type="button">← VOLTAR</button>
+        </div>
+      </aside>
+    </main>
+
+    <!-- ========================================
+         TEMPLATES DE CONTEÚDO
+         ======================================== -->
+
+    <!-- MANIFESTO -->
     <template id="tpl-manifesto">
       <section class="panelSection panelSection--manifesto">
         <p class="manifestoP">
@@ -135,15 +167,14 @@
         <img src="assets/svg/manifesto-selo.svg" class="manifestoSelo" alt="Selo Manifesto" />
       </section>
     </template>
-    <!-- FIM DE MANIFESTO -->
 
-    <!-- SEÇÃO CONTATO -->
+    <!-- CONTATO -->
     <template id="tpl-contato">
       <section class="panelSection panelSection--contato">
         <h3 class="ctTitle">Conte a sua ideia pra gente!</h3>
 
         <p class="ctIntro">
-          Use o formulário abaixo ou dê um “alô" nas nossas redes sociais.<br />
+          Use o formulário abaixo ou dê um “alô” nas nossas redes sociais.<br />
           Estaremos prontos para te atender da melhor forma possível.
         </p>
 
@@ -183,7 +214,9 @@
           Todas as informações compartilhadas são tratadas com discrição e respeito.
         </p>
 
-        <a class="ctEmail" href="mailto:contato@estudiobolachas.com">contato@estudiobolachas.com</a>
+        <a class="ctEmail" href="mailto:contato@estudiobolachas.com">
+          contato@estudiobolachas.com
+        </a>
 
         <div class="ctSocial" aria-label="Redes sociais">
           <a
@@ -195,6 +228,7 @@
           >
             <span class="ctSocialIcon ctSocialIcon--insta" aria-hidden="true"></span>
           </a>
+
           <a
             class="ctSocialBtn"
             href="https://www.behance.net/estudiobolachas"
@@ -204,6 +238,7 @@
           >
             <span class="ctSocialIcon ctSocialIcon--behance" aria-hidden="true"></span>
           </a>
+
           <a
             class="ctSocialBtn"
             href="https://www.linkedin.com/company/estudiobolachas/"
@@ -213,6 +248,7 @@
           >
             <span class="ctSocialIcon ctSocialIcon--linkedin" aria-hidden="true"></span>
           </a>
+
           <a
             class="ctSocialBtn"
             href="https://api.whatsapp.com/message/KOBMPQ3VIMDCH1"
@@ -225,9 +261,8 @@
         </div>
       </section>
     </template>
-    <!-- FIM DE CONTATO -->
 
-    <!-- SEÇÃO SERVIÇOS -->
+    <!-- SERVIÇOS -->
     <template id="tpl-servicos">
       <section class="panelSection panelSection--servicos">
         <div class="svcBlock">
@@ -285,9 +320,8 @@
         </a>
       </section>
     </template>
-    <!-- FIM DE SERVIÇOS -->
 
-    <!-- SEÇÃO LINKS -->
+    <!-- LINKS -->
     <template id="tpl-links">
       <section class="panelSection panelSection--links">
         <a
@@ -299,7 +333,7 @@
           <div class="linksBtn__title">NOVIDADES</div>
           <div class="linksBtn__desc">
             Acompanhe nossos projetos recentes no Instagram.
-            <span class="linksBtn__hl">@estudiobolachas</span>;
+            <span class="linksBtn__hl">@estudiobolachas</span>
           </div>
         </a>
 
@@ -312,7 +346,7 @@
           <div class="linksBtn__title">PROJETOS</div>
           <div class="linksBtn__desc">
             Veja nossos processos criativos no Behance.
-            <span class="linksBtn__hl">@estudiobolachas</span>;
+            <span class="linksBtn__hl">@estudiobolachas</span>
           </div>
         </a>
 
@@ -325,16 +359,15 @@
           <div class="linksBtn__title">GALERIA</div>
           <div class="linksBtn__desc">
             Conheça produtos originais com a nossa curadoria
-            <span class="linksBtn__hl">@galeriabolachas</span>;
+            <span class="linksBtn__hl">@galeriabolachas</span>
           </div>
         </a>
       </section>
     </template>
-    <!-- FIM DE LINKS -->
 
-    <!-- =========================
-         ABERTURA (OVERLAY)
-         ========================= -->
+    <!-- ========================================
+         ABERTURA / OVERLAY INICIAL
+         ======================================== -->
     <div class="entryOverlay" id="entryOverlay" aria-label="Abertura do site">
       <div class="entryBg" aria-hidden="true"></div>
 
@@ -354,12 +387,20 @@
       </div>
 
       <div class="linha-vermelha" aria-hidden="true"></div>
-      <img class="gotinha" src="assets/svg/gotinha.svg" alt="gotinha" />
+      <img class="gotinha" src="assets/svg/gotinha.svg" alt="Gotinha do lacre" />
     </div>
 
-    <!-- JS do site (radial) -->
-    <script src="js/app.js"></script>
-    <!-- JS da abertura (revela o site) -->
-    <script src="js/interaction.js"></script>
+    <!-- ========================================
+         JAVASCRIPT
+         Ordem:
+         1. Utilitários
+         2. Abertura
+         3. Painel de conteúdo
+         4. Menu radial
+         ======================================== -->
+    <script src="js/utils.js"></script>
+    <script src="js/entry.js"></script>
+    <script src="js/content.js"></script>
+    <script src="js/radial.js"></script>
   </body>
 </html>
