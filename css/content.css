@@ -185,6 +185,24 @@ body.mode-content .contentPanel {
   padding-right: calc(var(--panelPad) + 6px);
 }
 
+@media (max-width: 900px) {
+  .contentPanel__inner {
+    --panelPad: clamp(12px, 3.2vw, 18px);
+  }
+
+  .contentPanel__body {
+    overflow: hidden;
+    padding: var(--panelPad);
+    padding-right: var(--panelPad);
+    padding-bottom: 8px;
+  }
+
+  .contentPanel__back {
+    padding: 0 var(--panelPad) max(10px, env(safe-area-inset-bottom, 0px));
+    font-size: 13px;
+  }
+}
+
 .contentPanel__placeholder {
   margin: 0;
   opacity: 0.85;
@@ -357,14 +375,20 @@ body.mode-content .contentPanel {
 
 @media (max-width: 900px) {
   .panelSection--manifesto {
-    padding-top: 4vh;
-    gap: 12px;
+    padding-top: 1.6vh;
+    gap: 10px;
+    align-content: start;
   }
 
   .manifestoP {
-    max-width: 40ch;
-    font-size: 14px;
-    line-height: 1.42;
+    max-width: 39ch;
+    font-size: 13px;
+    line-height: 1.32;
+  }
+
+  .manifestoSelo {
+    width: clamp(64px, 22vw, 110px);
+    margin-top: 10px;
   }
 }
 
@@ -551,26 +575,27 @@ body.mode-content .contentPanel {
 
 @media (max-width: 900px) {
   .panelSection--links {
-    gap: clamp(14px, 3.2vh, 26px);
-    padding-top: clamp(12px, 3vh, 22px);
-    padding-bottom: clamp(12px, 2.5vh, 18px);
+    gap: 10px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    align-content: center;
   }
 
   .linksBtn {
-    width: 90%;
+    width: 92%;
     max-width: 520px;
-    padding: clamp(12px, 2.3vh, 16px) clamp(16px, 4vw, 22px);
+    padding: 10px 14px;
   }
 
   .linksBtn__title {
-    margin-bottom: clamp(6px, 1.2vh, 10px);
-    font-size: clamp(22px, 7vw, 32px);
-    letter-spacing: 0.02em;
+    margin-bottom: 4px;
+    font-size: clamp(20px, 6vw, 28px);
+    letter-spacing: 0.015em;
   }
 
   .linksBtn__desc {
-    font-size: clamp(12px, 3.4vw, 14px);
-    line-height: 1.2;
+    font-size: 11px;
+    line-height: 1.15;
   }
 }
 
@@ -770,35 +795,52 @@ body.mode-content .contentPanel {
 
 @media (max-width: 900px) {
   .panelSection--servicos {
-    gap: 14px;
-    padding-top: 4vh;
+    gap: 10px;
+    padding-top: 6px;
+    align-content: start;
   }
 
   .svcBlock {
-    gap: 8px;
+    gap: 5px;
+  }
+
+  .svcBlock + .svcBlock {
+    padding-top: 2px;
   }
 
   .svcHead {
-    gap: 8px;
+    gap: 6px;
+  }
+
+  .svcBullet {
+    font-size: 20px;
   }
 
   .svcTitle {
-    font-size: clamp(20px, 5.6vw, 28px);
+    font-size: clamp(18px, 5vw, 24px);
+    line-height: 1;
   }
 
   .svcDesc {
-    margin-left: calc(clamp(22px, 3.8vw, 32px) + 8px);
-    font-size: 12px;
-    line-height: 1.22;
+    margin-left: 26px;
+    font-size: 11px;
+    line-height: 1.15;
+    max-width: 44ch;
   }
 
   .svcCta {
-    height: 56px;
+    height: 48px;
+    margin-top: 8px;
   }
 
   .svcCta__label {
-    font-size: 15px;
-    letter-spacing: 0.05em;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+  }
+
+  .svcCta__icon {
+    width: 18px;
+    height: 18px;
   }
 }
 
@@ -1118,62 +1160,86 @@ body.mode-content .contentPanel {
 
 @media (max-width: 900px) {
   .panelSection--contato {
-    gap: 10px;
-    padding-top: 10px;
+    gap: 8px;
+    padding-top: 2px;
+    align-content: start;
   }
 
   .ctTitle {
     white-space: nowrap;
-    font-size: clamp(18px, 5.2vw, 22px);
+    font-size: clamp(16px, 4.8vw, 20px);
+    line-height: 1;
   }
 
   .ctIntro {
-    font-size: 11px;
-    line-height: 1.18;
+    font-size: 10px;
+    line-height: 1.12;
   }
 
   .ctFormBox {
-    padding: 12px;
-    border-radius: 20px;
+    padding: 10px;
+    border-radius: 16px;
   }
 
   .ctForm {
-    gap: 8px;
+    gap: 6px;
   }
 
   .ctField {
-    padding: 8px 12px;
+    gap: 8px;
+    padding: 7px 10px;
   }
 
   .ctField--msg {
-    padding: 10px 12px;
+    padding: 8px 10px;
+    border-radius: 16px;
+  }
+
+  .ctIcon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .ctInput {
+    font-size: 12px;
   }
 
   .ctTextarea {
-    min-height: 92px;
+    min-height: 72px;
   }
 
   .ctLegend {
-    font-size: 11px;
+    font-size: 10px;
+    margin-top: 0;
   }
 
   .ctSend {
-    height: 48px;
+    height: 42px;
+    font-size: 12px;
   }
 
   .ctInfo {
-    font-size: 9px;
-    line-height: 1.15;
+    font-size: 8px;
+    line-height: 1.1;
+  }
+
+  .ctEmail {
+    font-size: 12px;
+  }
+
+  .ctSocial {
+    gap: 10px;
+    margin-top: 0;
   }
 
   .ctSocialBtn {
-    width: 42px;
-    height: 42px;
+    width: 38px;
+    height: 38px;
   }
 
   .ctSocialIcon {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
   }
 }
 
