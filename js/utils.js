@@ -28,7 +28,6 @@
 
   /**
    * Retorna o equivalente angular mais próximo do ângulo atual.
-   * Útil para snap circular sem “pulos”.
    * @param {number} target
    * @param {number} current
    * @returns {number}
@@ -44,6 +43,19 @@
    */
   function siteIsOpen() {
     return document.body.classList.contains("site-open");
+  }
+
+  /**
+   * Atualiza variáveis globais de viewport real.
+   * Usa visualViewport quando disponível para evitar bugs de 100vh no mobile.
+   */
+  function updateViewportVars() {
+    const vv = window.visualViewport;
+    const appHeight = vv ? vv.height : window.innerHeight;
+    const appWidth = vv ? vv.width : window.innerWidth;
+
+    document.documentElement.style.setProperty("--app-height", `${appHeight}px`);
+    document.documentElement.style.setProperty("--app-width", `${appWidth}px`);
   }
 
   /**
@@ -69,14 +81,28 @@
     });
   }
 
+  function initViewportTracking() {
+    updateViewportVars();
+
+    window.addEventListener("resize", updateViewportVars);
+    window.addEventListener("orientationchange", updateViewportVars);
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", updateViewportVars);
+      window.visualViewport.addEventListener("scroll", updateViewportVars);
+    }
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
     initExternalLinks();
+    initViewportTracking();
   });
 
   window.BolachasUtils = {
     clamp,
     nearestEquivalent,
     normalizeDeg,
-    siteIsOpen
+    siteIsOpen,
+    updateViewportVars
   };
 })();

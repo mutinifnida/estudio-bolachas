@@ -97,14 +97,25 @@ body.mode-content .contentBackdrop {
 
 @media (max-width: 900px) {
   :root {
-    --contentPanelH: 73vh;
-    --panelTop: calc(100vh - var(--contentPanelH));
-    --bolachinhaSafeTop: calc(2vh + clamp(100px, 30vw, 120px) + 12px);
+    /* fallback caso o JS ainda não tenha rodado */
+    --app-height: 100vh;
+
+    /* altura real do painel baseada na viewport visível */
+    --contentPanelH: calc(var(--app-height) * 0.73);
+
+    /* topo real do painel */
+    --panelTop: calc(var(--app-height) - var(--contentPanelH));
+
+    /* área ocupada pela bolachinha + respiro */
+    --bolachinhaSafeTop: calc(2vh + clamp(100px, 30vw, 120px) + 16px);
+
+    /* pequena folga visual entre título e painel */
+    --contentTitleOffset: 10px;
   }
 
   .contentTitle {
     top: max(var(--panelTop), var(--bolachinhaSafeTop));
-    transform: translateX(-50%) translateY(calc(-100% + 10px));
+    transform: translateX(-50%) translateY(calc(-100% + var(--contentTitleOffset)));
   }
 
   body.mode-content .contentTitle {
@@ -145,7 +156,8 @@ body.mode-content .contentPanel {
     bottom: 0;
 
     width: 100vw;
-    height: var(--contentPanelH, 73vh);
+    height: var(--contentPanelH, calc(var(--app-height, 100vh) * 0.73));
+    max-height: var(--contentPanelH, calc(var(--app-height, 100vh) * 0.73));
 
     translate: 0 110%;
     transition-delay: 90ms;
