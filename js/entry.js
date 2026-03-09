@@ -3,11 +3,16 @@
 
   let hasSlid = false;
   let isDragging = false;
+  let dragMode = null; // "drop" | "swipe" | null
 
   const MOBILE_BP = 900;
   const MOBILE_RANGE = 0.78;
   const DESKTOP_PADDING_RIGHT = 20;
   const MIN_RADIUS = 120;
+
+  /* Área central permitida para o gesto mobile */
+  const SWIPE_ZONE_TOP = 0.22; // 22% da altura
+  const SWIPE_ZONE_BOTTOM = 0.78; // 78% da altura
 
   let startLeft = MIN_RADIUS;
   let maxRight = window.innerWidth - DESKTOP_PADDING_RIGHT;
@@ -75,6 +80,7 @@
 
     hasSlid = true;
     isDragging = false;
+    dragMode = null;
 
     document.documentElement.style.setProperty("--pull", "1");
     document.documentElement.style.setProperty("--reveal", "1");
@@ -106,6 +112,72 @@
     return event.clientX;
   }
 
+  /**
+   * Extrai clientY de pointer ou touch.
+   * @param {PointerEvent | TouchEvent} event
+   * @returns {number}
+   */
+  function getClientY(event) {
+    if ("touches" in event && event.touches.length > 0) {
+      return event.touches[0].clientY;
+    }
+
+    return event.clientY;
+  }
+
+  /**
+   * Indica se estamos no breakpoint mobile.
+   * @returns {boolean}
+   */
+  function isMobileViewport() {
+    return window.innerWidth <= MOBILE_BP;
+  }
+
+  /**
+   * Verifica se o gesto começou na zona central permitida do mobile.
+   * @param {number} clientY
+   * @returns {boolean}
+   */
+  function isInsideMobileSwipeZone(clientY) {
+    const h = window.innerHeight;
+    const minY = h * SWIPE_ZONE_TOP;
+    const maxY = h * SWIPE_ZONE_BOTTOM;
+    return clientY >= minY && clientY <= maxY;
+  }
+
+  /**
+   * Atualiza visualmente o progresso da abertura.
+   * @param {number} clientX
+   * @param {Object} elements
+   * @param {HTMLElement} elements.gotinha
+   * @param {HTMLElement} elements.linha
+   * @param {HTMLElement} elements.topBox
+   * @param {HTMLElement} elements.bottomBox
+   * @param {HTMLElement} elements.overlay
+   */
+  function updateDragProgress(clientX, elements) {
+    const { gotinha, linha, topBox, bottomBox, overlay } = elements;
+
+    const clampedX = clamp(clientX, startLeft, maxRight);
+    const percent = (clampedX - startLeft) / (maxRight - startLeft);
+
+    document.documentElement.style.setProperty("--pull", percent.toFixed(4));
+    document.documentElement.style.setProperty("--reveal", percent.toFixed(4));
+
+    gotinha.style.left = `${clampedX}px`;
+
+    linha.style.left = `${clampedX}px`;
+    linha.style.width = `${window.innerWidth - clampedX}px`;
+
+    const radius = Math.round(MIN_RADIUS + (maxRadius - MIN_RADIUS) * percent);
+    topBox.style.borderBottomLeftRadius = `${radius}px`;
+    bottomBox.style.borderTopLeftRadius = `${radius}px`;
+
+    if (clampedX >= maxRight - 6) {
+      openPack(overlay);
+    }
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
     setRealViewportHeight();
     window.addEventListener("resize", setRealViewportHeight);
@@ -124,7 +196,7 @@
 
     gotinha.addEventListener("dragstart", (event) => event.preventDefault());
 
-    const elements = { gotinha, linha, topBox, bottomBox };
+    const elements = { gotinha, linha, topBox, bottomBox, overlay };
 
     setInitialState(elements);
 
@@ -133,49 +205,61 @@
       setInitialState(elements);
     });
 
-    function onStart(event) {
+    function onGotinhaStart(event) {
       if (hasSlid) return;
 
       isDragging = true;
+      dragMode = "drop";
+
       document.body.style.userSelect = "none";
       gotinha.setPointerCapture?.(event.pointerId);
+    }
+
+    function onOverlayStart(event) {
+      if (hasSlid) return;
+      if (!isMobileViewport()) return;
+      if (dragMode) return;
+
+      const target = event.target;
+      if (target === gotinha) return;
+
+      const clientY = getClientY(event);
+      if (!isInsideMobileSwipeZone(clientY)) return;
+
+      isDragging = true;
+      dragMode = "swipe";
+
+      document.body.style.userSelect = "none";
     }
 
     function onMove(event) {
       if (!isDragging || hasSlid) return;
 
       const clientX = getClientX(event);
-      const clampedX = clamp(clientX, startLeft, maxRight);
-      const percent = (clampedX - startLeft) / (maxRight - startLeft);
-
-      document.documentElement.style.setProperty("--pull", percent.toFixed(4));
-      document.documentElement.style.setProperty("--reveal", percent.toFixed(4));
-
-      gotinha.style.left = `${clampedX}px`;
-
-      linha.style.left = `${clampedX}px`;
-      linha.style.width = `${window.innerWidth - clampedX}px`;
-
-      const radius = Math.round(MIN_RADIUS + (maxRadius - MIN_RADIUS) * percent);
-      topBox.style.borderBottomLeftRadius = `${radius}px`;
-      bottomBox.style.borderTopLeftRadius = `${radius}px`;
-
-      if (clampedX >= maxRight - 6) {
-        openPack(overlay);
-      }
+      updateDragProgress(clientX, elements);
     }
 
     function onEnd() {
       isDragging = false;
+      dragMode = null;
       document.body.style.userSelect = "";
     }
 
-    gotinha.addEventListener("pointerdown", onStart);
-    window.addEventListener("pointermove", onMove);
-    window.addEventListener("pointerup", onEnd);
+    /* Arraste tradicional da gotinha */
+    gotinha.addEventListener("pointerdown", onGotinhaStart);
+    gotinha.addEventListener("touchstart", onGotinhaStart, { passive: true });
 
-    gotinha.addEventListener("touchstart", onStart, { passive: true });
+    /* Swipe horizontal na área central do mobile */
+    overlay.addEventListener("pointerdown", onOverlayStart);
+    overlay.addEventListener("touchstart", onOverlayStart, { passive: true });
+
+    /* Movimento global */
+    window.addEventListener("pointermove", onMove);
     window.addEventListener("touchmove", onMove, { passive: true });
+
+    /* Finalização */
+    window.addEventListener("pointerup", onEnd);
     window.addEventListener("touchend", onEnd, { passive: true });
+    window.addEventListener("touchcancel", onEnd, { passive: true });
   });
 })();

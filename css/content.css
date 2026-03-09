@@ -375,9 +375,10 @@ body.mode-content .contentPanel {
 
 @media (max-width: 900px) {
   .panelSection--manifesto {
-    padding-top: 1.6vh;
+    min-height: 100%;
+    padding-top: 0;
     gap: 10px;
-    align-content: start;
+    align-content: center;
   }
 
   .manifestoP {
@@ -388,7 +389,7 @@ body.mode-content .contentPanel {
 
   .manifestoSelo {
     width: clamp(64px, 22vw, 110px);
-    margin-top: 10px;
+    margin-top: 8px;
   }
 }
 
@@ -575,9 +576,10 @@ body.mode-content .contentPanel {
 
 @media (max-width: 900px) {
   .panelSection--links {
+    min-height: 100%;
     gap: 10px;
-    padding-top: 4px;
-    padding-bottom: 4px;
+    padding-top: 0;
+    padding-bottom: 0;
     align-content: center;
   }
 
@@ -795,9 +797,10 @@ body.mode-content .contentPanel {
 
 @media (max-width: 900px) {
   .panelSection--servicos {
+    min-height: 100%;
     gap: 10px;
-    padding-top: 6px;
-    align-content: start;
+    padding-top: 0;
+    align-content: center;
   }
 
   .svcBlock {
@@ -1160,9 +1163,10 @@ body.mode-content .contentPanel {
 
 @media (max-width: 900px) {
   .panelSection--contato {
+    min-height: 100%;
     gap: 8px;
-    padding-top: 2px;
-    align-content: start;
+    padding-top: 0;
+    align-content: center;
   }
 
   .ctTitle {
@@ -1240,6 +1244,34 @@ body.mode-content .contentPanel {
   .ctSocialIcon {
     width: 18px;
     height: 18px;
+  }
+}
+
+/* ALINHAMENTO DE SEÇÕES */
+@media (max-width: 900px) {
+  .panelSection--manifesto,
+  .panelSection--links,
+  .panelSection--servicos,
+  .panelSection--contato {
+    min-height: 100%;
+    align-content: center;
+  }
+}
+
+@media (max-width: 900px) {
+  .panelSection--servicos,
+  .panelSection--contato {
+    justify-items: center;
+  }
+
+  .panelSection--servicos .svcBlock,
+  .panelSection--contato .ctFormBox,
+  .panelSection--contato .ctInfo,
+  .panelSection--contato .ctEmail,
+  .panelSection--contato .ctSocial,
+  .panelSection--contato .ctTitle,
+  .panelSection--contato .ctIntro {
+    width: 100%;
   }
 }
 
