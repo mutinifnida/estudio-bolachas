@@ -50,7 +50,7 @@
   font-display: swap;
 }
 
-/* Corben */
+/* Corben Regular */
 @font-face {
   font-family: "Corben Regular";
   src: url("../assets/fonts/Corben-Regular.ttf") format("truetype");
@@ -59,6 +59,7 @@
   font-display: swap;
 }
 
+/* Corben Bold */
 @font-face {
   font-family: "Corben Bold";
   src: url("../assets/fonts/Corben-Bold.ttf") format("truetype");
@@ -95,6 +96,18 @@ body {
     Roboto,
     Arial,
     sans-serif;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  background-color: #ff3333;
+}
+
+body {
+  background-color: #ff3333;
 }
 
 /* Fundo reativo proporcional ao reveal */
@@ -298,4 +311,16 @@ body.mode-content .contentPanel {
 .radial__list,
 .radial__item {
   pointer-events: auto;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
