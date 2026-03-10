@@ -1832,3 +1832,160 @@ body.mode-content[data-active="contato"] .panelSection--contato .ctSocial {
     height: 16px;
   }
 }
+
+/* ==========================================================================
+   DESKTOP BAIXO — CONTENÇÃO DA BASE DOS CONTEÚDOS
+   Foco em SERVIÇOS e CONTATO
+   ========================================================================== */
+
+@media (min-width: 901px) and (max-height: 800px) {
+  .contentPanel__body {
+    align-items: center;
+  }
+
+  .panelSection--servicos,
+  .panelSection--contato {
+    width: min(100%, calc(100% / var(--desktopPanelScale, 1)));
+    max-width: calc(100% / var(--desktopPanelScale, 1));
+
+    height: auto;
+    min-height: auto;
+    max-height: none;
+
+    transform: scale(var(--desktopPanelScale, 1));
+    transform-origin: center center;
+  }
+
+  /* SERVIÇOS */
+  .panelSection--servicos {
+    gap: clamp(8px, 1.2vh, 12px);
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .svcBlock {
+    gap: 6px;
+  }
+
+  .svcBlock + .svcBlock {
+    padding-top: 2px;
+  }
+
+  .svcHead {
+    gap: 8px;
+  }
+
+  .svcBullet {
+    font-size: clamp(18px, 2vw, 24px);
+  }
+
+  .svcTitle {
+    font-size: clamp(20px, 2.3vw, 28px);
+    line-height: 1;
+  }
+
+  .svcDesc {
+    max-width: 54ch;
+    margin-left: 28px;
+    font-size: clamp(12px, 0.95vw, 14px);
+    line-height: 1.14;
+  }
+
+  .svcCta {
+    width: min(520px, 88%);
+    height: 50px;
+    margin-top: clamp(10px, 1.8vh, 18px);
+  }
+
+  .svcCta__label {
+    font-size: clamp(15px, 1.2vw, 18px);
+  }
+
+  .svcCta__icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* CONTATO */
+  .panelSection--contato {
+    gap: clamp(6px, 1vh, 10px);
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .ctTitle {
+    font-size: clamp(22px, 2.2vw, 28px);
+    line-height: 1;
+  }
+
+  .ctIntro {
+    font-size: clamp(11px, 0.9vw, 13px);
+    line-height: 1.12;
+  }
+
+  .ctFormBox {
+    padding: 12px;
+    border-radius: 18px;
+  }
+
+  .ctForm {
+    gap: 6px;
+  }
+
+  .ctField {
+    gap: 8px;
+    padding: 8px 10px;
+  }
+
+  .ctField--msg {
+    padding: 10px;
+    border-radius: 16px;
+  }
+
+  .ctIcon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .ctInput {
+    font-size: 12px;
+  }
+
+  .ctTextarea {
+    min-height: 72px;
+  }
+
+  .ctLegend {
+    margin-top: 0;
+    font-size: 10px;
+  }
+
+  .ctSend {
+    height: 42px;
+    font-size: 12px;
+  }
+
+  .ctInfo {
+    font-size: 10px;
+    line-height: 1.1;
+  }
+
+  .ctEmail {
+    font-size: clamp(12px, 1vw, 14px);
+  }
+
+  .ctSocial {
+    gap: 10px;
+    margin-top: 0;
+  }
+
+  .ctSocialBtn {
+    width: 38px;
+    height: 38px;
+  }
+
+  .ctSocialIcon {
+    width: 18px;
+    height: 18px;
+  }
+}
