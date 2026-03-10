@@ -127,7 +127,8 @@ body.mode-content .contentBackdrop {
   z-index: 9;
 
   width: 50vw;
-  height: 100vh;
+  height: 100dvh;
+  max-height: 100dvh;
 
   opacity: 1;
   background: #2a2a2a;
@@ -1386,9 +1387,13 @@ body.mode-content[data-active="contato"] .panelSection--contato .ctSocial {
    ========================================================================== */
 
 @media (min-width: 901px) and (max-height: 800px) {
+  :root {
+    --desktopPanelScale: clamp(0.8, calc(100dvh / 860), 0.94);
+  }
+
   .contentTitle {
     left: clamp(20px, 2.8vw, 40px);
-    font-size: clamp(45px, 10vw, 110px);
+    font-size: clamp(42px, 8vw, 96px);
   }
 
   .bolachinhaLogo {
@@ -1396,39 +1401,37 @@ body.mode-content[data-active="contato"] .panelSection--contato .ctSocial {
     top: clamp(18px, 2.6vw, 34px);
 
     width: 8vw;
-    height: 16vh;
+    height: 16dvh;
   }
 
   .contentPanel {
     width: 48vw;
+    height: 100dvh;
+    max-height: 100dvh;
   }
 
   .contentPanel__inner {
-    padding-bottom: clamp(18px, 2.4vh, 32px);
+    padding-bottom: clamp(12px, 1.8dvh, 22px);
   }
 
   .contentPanel__body {
-    padding-top: clamp(18px, 2.2vh, 24px);
+    padding-top: clamp(12px, 1.6dvh, 20px);
+    padding-bottom: clamp(8px, 1.2dvh, 14px);
   }
 
   .contentPanel__back {
-    font-size: clamp(15px, 1.4vw, 18px);
-  }
-
-  .panelSection--manifesto {
-    padding-top: 7vh;
-    gap: 16px;
+    font-size: clamp(14px, 1.2vw, 17px);
   }
 
   .manifestoP {
     max-width: 52ch;
-    font-size: clamp(14px, 1.2vw, 17px);
-    line-height: 1.18;
+    font-size: clamp(14px, 1.05vw, 16px);
+    line-height: 1.16;
   }
 
   .manifestoSelo {
-    width: clamp(72px, 10vw, 120px);
-    margin-top: 14px;
+    width: clamp(68px, 9vw, 108px);
+    margin-top: 10px;
   }
 }
 
@@ -1449,6 +1452,40 @@ body.mode-content[data-active="contato"] .panelSection--contato .ctSocial {
 
     align-content: center;
     justify-content: center;
+  }
+}
+
+/* ==========================================================================
+   DESKTOP — FIT VERTICAL DO CONTEÚDO
+   Mantém o conteúdo inteiro visível em alturas úteis menores
+   ========================================================================== */
+
+@media (min-width: 901px) {
+  :root {
+    --desktopPanelScale: clamp(0.84, calc(100dvh / 900), 1);
+  }
+
+  .contentPanel__body {
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+  }
+
+  .panelSection--manifesto,
+  .panelSection--links,
+  .panelSection--servicos,
+  .panelSection--contato {
+    width: min(100%, calc(100% / var(--desktopPanelScale)));
+    max-width: calc(100% / var(--desktopPanelScale));
+
+    height: auto;
+    min-height: auto;
+    max-height: none;
+
+    margin: 0 auto;
+
+    transform: scale(var(--desktopPanelScale));
+    transform-origin: center center;
   }
 }
 

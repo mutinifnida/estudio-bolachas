@@ -13,7 +13,7 @@
   --safe: clamp(16px, 2.5vw, 32px);
   --radius: 275px;
   --cx: calc(var(--radius) * 0.18 + var(--safe));
-  --cy: calc(50vh - 40px);
+  --cy: calc(50dvh - 40px);
   --dotsH: 70px;
 }
 
@@ -274,7 +274,7 @@ body.is-snapping .dot.is-active {
     top: 0;
     right: 0;
     width: 10vw;
-    height: 100vh;
+    height: 100dvh;
   }
 
   .gfxBand__barcode {
@@ -375,7 +375,7 @@ body.is-snapping .dot.is-active {
     top: 50%;
 
     width: clamp(80px, 10vw, 180px);
-    height: 96vh;
+    height: 96dvh;
     max-height: none;
 
     transform: translateY(-50%);
@@ -418,7 +418,7 @@ body.is-snapping .dot.is-active {
   .radial {
     --radius: 220px;
     --cx: calc(var(--radius) * 0.16 + var(--safe));
-    --cy: calc(50vh - 64px);
+    --cy: calc(50dvh - 64px);
 
     --rosetaSize: 82vw;
     --rosetaDx: 160px;
