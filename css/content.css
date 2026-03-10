@@ -90,29 +90,34 @@ body.mode-content .contentBackdrop {
 
 @media (max-width: 900px) {
   :root {
-    /* fallback caso o JS ainda não tenha rodado */
     --app-height: 100vh;
-
-    /* altura real do painel baseada na viewport visível */
     --contentPanelH: calc(var(--app-height) * 0.73);
-
-    /* topo real do painel */
     --panelTop: calc(var(--app-height) - var(--contentPanelH));
 
-    /* área ocupada pela bolachinha + respiro */
-    --bolachinhaSafeTop: calc(2vh + clamp(100px, 30vw, 120px) + 16px);
+    /* área livre acima do painel */
+    --topFreeSpace: var(--panelTop);
 
-    /* pequena folga visual entre título e painel */
-    --contentTitleOffset: 10px;
+    /* bolachinha cresce conforme a sobra vertical */
+    --bolachinhaSize: clamp(108px, calc(var(--topFreeSpace) * 0.72), 200px);
+
+    --bolachinhaSafeTop: calc(0.8vh + var(--bolachinhaSize) + 10px);
+
+    /* faixa interna reservada para o título */
+    --contentTitleInset: 12px;
+    --contentTitleH: clamp(34px, 10vw, 46px);
+
+    /* espaço real que o body deve reservar para o título */
+    --contentTitleReserve: calc(var(--contentTitleH) + var(--contentTitleInset) + 10px);
   }
 
   .contentTitle {
-    top: max(var(--panelTop), var(--bolachinhaSafeTop));
-    transform: translateX(-50%) translateY(calc(-100% + var(--contentTitleOffset)));
+    top: max(calc(var(--panelTop) + var(--contentTitleInset)), var(--bolachinhaSafeTop));
+    font-size: var(--contentTitleH);
+    transform: translateX(-50%) translateY(0);
   }
 
   body.mode-content .contentTitle {
-    transform: translateX(-50%) translateY(-100%);
+    transform: translateX(-50%) translateY(0);
   }
 }
 
@@ -199,9 +204,13 @@ body.mode-content .contentPanel {
 
   .contentPanel__body {
     overflow: hidden;
-    padding: var(--panelPad);
+    padding-top: calc(var(--panelPad) + var(--contentTitleReserve, 56px));
     padding-right: var(--panelPad);
     padding-bottom: 8px;
+    padding-left: var(--panelPad);
+
+    display: grid;
+    align-items: center;
   }
 
   .contentPanel__back {
@@ -454,10 +463,11 @@ body.mode-content .contentPanel {
 @media (max-width: 900px) {
   .bolachinhaLogo {
     left: 50%;
-    top: 2vh;
+    top: 3vh;
+    bottom: 3vh;
 
-    width: clamp(100px, 30vw, 120px);
-    height: clamp(100px, 30vw, 120px);
+    width: var(--bolachinhaSize);
+    height: var(--bolachinhaSize);
 
     background-image: url("../assets/svg/bolachinha.svg");
     translate: -50% -140%;
@@ -1215,7 +1225,8 @@ body.mode-content .contentPanel {
   .panelSection--links,
   .panelSection--servicos,
   .panelSection--contato {
-    min-height: 100%;
+    min-height: calc(100% - var(--contentTitleReserve, 56px));
+    max-height: calc(100% - var(--contentTitleReserve, 56px));
     align-content: center;
   }
 }
@@ -1686,13 +1697,18 @@ body.mode-content[data-active="contato"] .panelSection--contato .ctSocial {
 
 @media (max-width: 380px) {
   :root {
-    /* painel um pouco mais alto para compensar barras do navegador */
     --contentPanelH: calc(var(--app-height, 100vh) * 0.76);
     --panelTop: calc(var(--app-height, 100vh) - var(--contentPanelH));
 
-    /* mantém título acima do painel sem invadir a bolachinha */
-    --bolachinhaSafeTop: calc(2vh + clamp(92px, 28vw, 108px) + 12px);
-    --contentTitleOffset: 8px;
+    --topFreeSpace: var(--panelTop);
+
+    --bolachinhaSize: clamp(96px, calc(var(--topFreeSpace) * 0.76), 136px);
+
+    --bolachinhaSafeTop: calc(0.6vh + var(--bolachinhaSize) + 8px);
+
+    --contentTitleInset: 10px;
+    --contentTitleH: clamp(32px, 10.5vw, 40px);
+    --contentTitleReserve: calc(var(--contentTitleH) + var(--contentTitleInset) + 8px);
   }
 
   .contentPanel__inner {
@@ -1700,24 +1716,25 @@ body.mode-content[data-active="contato"] .panelSection--contato .ctSocial {
   }
 
   .contentPanel__body {
-    padding: var(--panelPad);
+    padding-top: calc(var(--panelPad) + var(--contentTitleReserve));
     padding-right: var(--panelPad);
     padding-bottom: 6px;
+    padding-left: var(--panelPad);
     overflow: hidden;
+  }
+
+  .contentTitle {
+    font-size: var(--contentTitleH);
+  }
+
+  .bolachinhaLogo {
+    width: var(--bolachinhaSize);
+    height: var(--bolachinhaSize);
   }
 
   .contentPanel__back {
     padding: 0 var(--panelPad) max(8px, env(safe-area-inset-bottom, 0px));
     font-size: 12px;
-  }
-
-  .contentTitle {
-    font-size: clamp(34px, 11vw, 42px);
-  }
-
-  .bolachinhaLogo {
-    width: clamp(92px, 28vw, 108px);
-    height: clamp(92px, 28vw, 108px);
   }
 
   /* ----------------------------------------------------------------------

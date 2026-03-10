@@ -35,7 +35,7 @@
 @media (max-width: 520px) {
   .radial {
     --radius: 140px;
-    --cy: 30vh;
+    --cy: 32vh;
     width: 520px;
     height: 520px;
   }
