@@ -250,7 +250,26 @@
         <p class="ctIntro">Use o formulário abaixo ou dê um “alô” nas nossas redes sociais.</p>
 
         <div class="ctFormBox">
-          <form class="ctForm" action="#" method="post">
+          <form
+            class="ctForm"
+            name="contato"
+            method="POST"
+            action="/obrigado"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+          >
+            <input type="hidden" name="form-name" value="contato" />
+            <input
+              type="hidden"
+              name="subject"
+              data-remove-prefix
+              value="Novo lead - Estúdio Bolachas"
+            />
+
+            <p class="hidden-field">
+              <label>Não preencha: <input name="bot-field" /></label>
+            </p>
+
             <label class="ctField">
               <span class="ctIcon ctIcon--user" aria-hidden="true"></span>
               <input class="ctInput" type="text" name="nome" placeholder="Nome*" required />
@@ -471,5 +490,22 @@
     <script src="js/entry.js"></script>
     <script src="js/content.js"></script>
     <script src="js/radial.js"></script>
+
+    <form
+      name="contato"
+      method="POST"
+      action="/obrigado"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      hidden
+    >
+      <input type="hidden" name="form-name" value="contato" />
+      <input type="text" name="nome" />
+      <input type="email" name="email" />
+      <input type="tel" name="telefone" />
+      <textarea name="mensagem"></textarea>
+      <input name="bot-field" />
+      <input type="hidden" name="subject" value="Novo lead - Estúdio Bolachas" />
+    </form>
   </body>
 </html>

@@ -324,3 +324,11 @@ body.mode-content .contentPanel {
   white-space: nowrap;
   border: 0;
 }
+
+.hidden-field {
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+}

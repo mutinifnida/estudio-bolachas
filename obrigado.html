@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Mensagem enviada | Estúdio Bolachas</title>
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#2a2a2a" />
+
+    <!-- Usa os @font-face já definidos no projeto -->
+    <link rel="stylesheet" href="css/base.css" />
+
+    <style>
+      :root {
+        --bg: #2a2a2a;
+        --panel: #f59835;
+        --title: #2a2a2a;
+        --text: #e5e1c3;
+        --cta-bg: #ff3333;
+        --cta-hover: #2a2a2a;
+        --cta-text: #e5e1c3;
+        --cta-hover-text: #e5e1c3;
+        --shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+        --radius: 28px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        min-height: 100%;
+        margin: 0;
+      }
+
+      html {
+        background: var(--bg);
+      }
+
+      body {
+        position: relative;
+        min-height: 100vh;
+        overflow: hidden;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        background: var(--bg);
+        color: var(--text);
+      }
+
+      /* grain */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: -30%;
+        pointer-events: none;
+        opacity: 0.08;
+        mix-blend-mode: overlay;
+        filter: contrast(92%) brightness(112%);
+        background-image:
+          repeating-linear-gradient(
+            0deg,
+            rgba(255, 255, 255, 0.22) 0px,
+            rgba(255, 255, 255, 0.22) 1px,
+            transparent 2px,
+            transparent 4px
+          ),
+          repeating-linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.16) 0px,
+            rgba(0, 0, 0, 0.16) 1px,
+            transparent 2px,
+            transparent 6px
+          ),
+          radial-gradient(circle at 30% 20%, rgba(0, 0, 0, 0.1) 0%, transparent 42%),
+          radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 44%);
+        animation: grain-drift 7.5s steps(10) infinite;
+        z-index: 0;
+      }
+
+      @keyframes grain-drift {
+        0% {
+          transform: translate3d(-1.5%, -1%, 0);
+        }
+        20% {
+          transform: translate3d(1%, -1.8%, 0);
+        }
+        40% {
+          transform: translate3d(1.8%, 0.8%, 0);
+        }
+        60% {
+          transform: translate3d(-1.6%, 1.6%, 0);
+        }
+        80% {
+          transform: translate3d(0.8%, -0.6%, 0);
+        }
+        100% {
+          transform: translate3d(-1.5%, -1%, 0);
+        }
+      }
+
+      .thanksWrap {
+        position: relative;
+        z-index: 1;
+        width: min(100%, 780px);
+      }
+
+      .thanksCard {
+        background: var(--panel);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: clamp(28px, 4vw, 42px);
+        text-align: center;
+      }
+
+      .thanksBolachinha {
+        width: clamp(150px, 20vw, 280px);
+        height: clamp(150px, 20vw, 280px);
+        margin: 0 auto 20px;
+
+        background: url("./assets/svg/bolachinha.svg") no-repeat center / contain;
+
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+
+        will-change: transform;
+        transition:
+          transform 160ms ease,
+          background-image 160ms ease;
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        .thanksBolachinha:hover {
+          transform: scale(1.03);
+          background-image: url("./assets/svg/bolachinha-b.svg");
+        }
+      }
+
+      .thanksBolachinha:active {
+        transform: scale(0.98);
+        background-image: url("./assets/svg/bolachinha-b.svg");
+      }
+
+      .thanksTitle {
+        margin: 0 0 16px;
+        color: var(--title);
+        font-family: "Gotham Ultra Italic", "Gotham Ultra", "Arial Black", Arial, sans-serif;
+        font-style: italic;
+        font-weight: 800;
+        font-size: clamp(42px, 8vw, 92px);
+        line-height: 0.92;
+        letter-spacing: -0.03em;
+        text-transform: uppercase;
+      }
+
+      @media (max-width: 1080px) {
+        body {
+          padding: 18px;
+        }
+
+        .thanksCard {
+          border-radius: 22px;
+          padding: 28px 20px 24px;
+        }
+
+        .thanksText {
+          font-size: 16px;
+        }
+
+        .thanksBtn {
+          width: 100%;
+          min-width: 0;
+        }
+      }
+
+      .thanksActions {
+        margin-top: 28px;
+        display: flex;
+        justify-content: center;
+      }
+
+      .thanksBtn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+
+        min-width: 260px;
+        height: 62px;
+        padding: 0 220px;
+
+        border: none;
+        border-radius: 999px;
+        text-decoration: none;
+        background: var(--cta-bg);
+        color: var(--cta-text);
+
+        font-family: "Gotham Bold", Arial, sans-serif;
+        font-size: clamp(18px, 2vw, 22px);
+        line-height: 1;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+
+        -webkit-tap-highlight-color: transparent;
+        transition:
+          background-color 160ms ease,
+          transform 160ms ease,
+          color 160ms ease;
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        .thanksBtn:hover {
+          background: var(--cta-hover);
+          color: var(--cta-hover-text);
+          transform: scale(1.01);
+        }
+      }
+
+      .thanksBtn:active {
+        background: var(--cta-hover);
+        color: var(--cta-hover-text);
+        transform: scale(0.99);
+      }
+
+      @media (max-width: 1080px) {
+        body {
+          padding: 18px;
+        }
+
+        .thanksCard {
+          border-radius: 22px;
+          padding: 28px 20px 24px;
+        }
+
+        .thanksText {
+          font-size: 16px;
+        }
+
+        .thanksBtn {
+          width: 100%;
+          min-width: 0;
+          padding: 0 24px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        body::before,
+        .thanksBtn {
+          animation: none;
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="thanksWrap" aria-labelledby="thanks-title">
+      <section class="thanksCard">
+        <div class="thanksBolachinha" aria-hidden="true"></div>
+        <h1 id="thanks-title" class="thanksTitle">Mensagem enviada!</h1>
+
+        <p class="thanksText">
+          Recebemos seu contato com sucesso.</br >
+          Em breve retornaremos para entender melhor sua demanda,
+          ideia ou necessidade atual.
+        </p>
+
+        <div class="thanksActions">
+          <a class="thanksBtn" href="/">Voltar ao site</a>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

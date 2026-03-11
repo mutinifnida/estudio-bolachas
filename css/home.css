@@ -41,13 +41,13 @@
   }
 }
 
-@media (min-width: 521px) and (max-width: 900px) {
+@media (min-width: 521px) and (max-width: 1080px) {
   .radial {
     --radius: 150px;
   }
 }
 
-@media (min-width: 901px) {
+@media (min-width: 1081px) {
   .radial {
     --radius: 275px;
   }
@@ -114,7 +114,7 @@
   }
 }
 
-@media (min-width: 500px) and (max-width: 900px) {
+@media (min-width: 500px) and (max-width: 1080px) {
   .radial {
     --rosetaSize: 90vh;
     --rosetaDx: 10vw;
@@ -122,7 +122,7 @@
   }
 }
 
-@media (min-width: 901px) {
+@media (min-width: 1081px) {
   .radial {
     --rosetaSize: 96vw;
     --rosetaDx: 300px;
@@ -146,6 +146,7 @@
   font-family: "Gotham Ultra Italic", "Gotham Ultra", "Arial Black", Arial, sans-serif;
   font-weight: 800;
   font-size: clamp(34px, 6.2vw, 74px);
+  font-style: italic;
   line-height: 1;
   letter-spacing: -0.02em;
   text-transform: uppercase;
@@ -196,7 +197,7 @@
   background: #e5e1c3;
 }
 
-@media (min-width: 901px) {
+@media (min-width: 1081px) {
   .radial__dots {
     top: var(--cy);
     transform: translateY(-50%);
@@ -269,7 +270,7 @@ body.is-snapping .dot.is-active {
 }
 
 /* Desktop */
-@media (min-width: 901px) {
+@media (min-width: 1081px) {
   .gfxBand {
     top: 0;
     right: 0;
@@ -309,7 +310,7 @@ body.is-snapping .dot.is-active {
 }
 
 /* Mobile */
-@media (max-width: 900px) {
+@media (max-width: 1080px) {
   .gfxBand {
     left: 0;
     right: 0;
@@ -369,7 +370,7 @@ body.is-snapping .dot.is-active {
 }
 
 /* Desktop */
-@media (min-width: 901px) {
+@media (min-width: 1081px) {
   .bolachasHeader {
     right: 18vw;
     top: 50%;
@@ -390,7 +391,7 @@ body.is-snapping .dot.is-active {
 }
 
 /* Mobile */
-@media (max-width: 900px) {
+@media (max-width: 1080px) {
   .bolachasHeader {
     left: 50%;
     bottom: 14vh;
@@ -414,7 +415,7 @@ body.is-snapping .dot.is-active {
    Ajustes para notebooks com pouca altura útil
    ========================================================================== */
 
-@media (min-width: 901px) and (max-height: 800px) {
+@media (min-width: 1081px) and (max-height: 800px) {
   .radial {
     --radius: 220px;
     --cx: calc(var(--radius) * 0.16 + var(--safe));
